@@ -13,10 +13,10 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: `Program Reseller | ${branding.brandName}`,
       description: `Raih penghasilan tambahan dengan menjadi reseller ${branding.brandName}. Komisi menarik, produk halal!`,
-      url: 'https://warungtehrisma-one.vercel.app/reseller',
+      url: 'https://karyaputra.vercel.app/reseller',
     },
     alternates: {
-      canonical: 'https://warungtehrisma-one.vercel.app/reseller',
+      canonical: 'https://karyaputra.vercel.app/reseller',
     },
   };
 }

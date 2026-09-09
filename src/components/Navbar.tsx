@@ -10,7 +10,7 @@ import { useCartStore } from '@/lib/store';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Locale } from '@/lib/i18n';
-import logo from '@/assets/images/logo-tehrisma.jpeg';
+import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { trackClick } from '@/lib/trackClick';
 import { useLiveBranding } from '@/lib/useLiveBranding';
 
@@ -65,8 +65,8 @@ export default function Navbar() {
               <Image src={logo} alt={branding.brandName} fill className="object-cover" />
             </motion.div>
             <div className="leading-none">
-              <p className="font-display text-base sm:text-lg font-bold text-amber-800 leading-none">Cemilan</p>
-              <p className="font-display text-sm sm:text-base font-bold gradient-text leading-none">Teh Risma</p>
+              <p className="font-display text-base sm:text-lg font-bold text-amber-800 leading-none">Karya</p>
+              <p className="font-display text-sm sm:text-base font-bold gradient-text leading-none">Putra</p>
             </div>
           </Link>
 

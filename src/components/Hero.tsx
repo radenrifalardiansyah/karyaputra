@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Star, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
-import logo from '@/assets/images/logo-tehrisma.jpeg';
+import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getProductLocale } from '@/lib/product-translations';
 import { useLiveProducts } from '@/lib/useLiveProducts';
@@ -202,7 +202,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-amber-100 border border-amber-300/60 text-amber-700 text-sm font-semibold mb-5"
             >
               <div className="relative w-7 h-7 rounded-full overflow-hidden border border-amber-300/60 flex-shrink-0">
-                <Image src={logo} alt="Teh Risma" fill className="object-cover" />
+                <Image src={logo} alt="Karya Putra" fill className="object-cover" />
               </div>
               {t.hero.brand(branding.brandName)}
             </motion.div>

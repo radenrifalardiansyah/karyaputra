@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Share, ChevronLeft, ChevronRight, BookOpen, Square, AlertCircle, Copy, Check } from 'lucide-react';
-import logo from '@/assets/images/logo-tehrisma.jpeg';
+import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Translation } from '@/lib/i18n';
 import { useLiveBranding } from '@/lib/useLiveBranding';
@@ -132,7 +132,7 @@ function SafariGuide({ t }: { t: Translation }) {
         <div className="flex items-center justify-between px-3 py-1.5 border-b border-gray-200 bg-white">
           <div className="flex-1 bg-gray-100 rounded-full px-3 py-1 flex items-center gap-1.5 min-w-0">
             <div className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0" />
-            <span className="text-[9px] text-gray-500 truncate font-medium">cemilantehrisma.vercel.app</span>
+            <span className="text-[9px] text-gray-500 truncate font-medium">karyaputra.vercel.app</span>
           </div>
           <span className="ml-2 flex-shrink-0 text-[8px] font-semibold text-amber-600 bg-amber-100 border border-amber-200 rounded px-1.5 py-0.5">
             Contoh

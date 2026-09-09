@@ -11,7 +11,7 @@ import Cart from '@/components/Cart';
 import BottomNav from '@/components/BottomNav';
 import { useLiveBranding } from '@/lib/useLiveBranding';
 import { useLanguage } from '@/contexts/LanguageContext';
-import logo from '@/assets/images/logo-tehrisma.jpeg';
+import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { LiveBranding } from '@/lib/branding';
 
 const getContacts = (branding: LiveBranding) => [
@@ -167,7 +167,7 @@ export default function KontakPage() {
 
         {/* WA order shortcut */}
         <motion.a
-          href={`https://wa.me/${branding.whatsappNumber}?text=${encodeURIComponent('Halo Teh Risma, saya mau pesan cemilan')}`}
+          href={`https://wa.me/${branding.whatsappNumber}?text=${encodeURIComponent('Halo Karya Putra, saya mau pesan cemilan')}`}
           target="_blank"
           rel="noopener noreferrer"
           initial={{ opacity: 0, y: 12 }}

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import logo          from '@/assets/images/logo-tehrisma.jpeg';
+import logo          from '@/assets/images/logo-karyaputra.jpeg';
 import bannerMie      from '@/assets/images/Banner Mie Kremes 1.png';
 import bannerKeripik  from '@/assets/images/Banner 1 Keripik Kimpul.png';
 import HalalBadge     from '@/components/HalalBadge';
@@ -176,7 +176,7 @@ export default async function ProposalPage() {
         {/* Brand info */}
         <div className="bg-white rounded-2xl border border-amber-100 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5">
           <div className="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-amber-100">
-            <Image src={logo} alt="Logo Teh Risma" width={56} height={56} className="object-cover w-full h-full" />
+            <Image src={logo} alt="Logo Karya Putra" width={56} height={56} className="object-cover w-full h-full" />
           </div>
           <div className="flex-1">
             <p className="text-xs font-bold tracking-widest text-amber-600 uppercase mb-1">Tentang Kami</p>

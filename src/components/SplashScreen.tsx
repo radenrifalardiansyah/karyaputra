@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from '@/assets/images/logo-tehrisma.jpeg';
+import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLiveBranding } from '@/lib/useLiveBranding';
 
@@ -62,13 +62,13 @@ export default function SplashScreen() {
               className="font-display text-3xl font-bold leading-tight"
               style={{ color: '#78350F' }}
             >
-              Cemilan
+              Karya
             </p>
             <p
               className="font-display text-3xl font-bold leading-tight"
               style={{ background: 'linear-gradient(135deg, #D97706, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
             >
-              Teh Risma
+              Putra
             </p>
           </motion.div>
 

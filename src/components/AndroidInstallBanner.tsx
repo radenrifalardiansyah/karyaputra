@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Download } from 'lucide-react';
-import logo from '@/assets/images/logo-tehrisma.jpeg';
+import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLiveBranding } from '@/lib/useLiveBranding';
 

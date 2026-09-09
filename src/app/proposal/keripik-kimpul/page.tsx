@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import logo from '@/assets/images/logo-tehrisma.jpeg';
+import logo from '@/assets/images/logo-karyaputra.jpeg';
 import imgOri    from '@/assets/images/Keripik Kimpul 100g Original.png';
 import imgBBQ    from '@/assets/images/Keripik Kimpul 100g BBQ.png';
 import imgBBQPdas from '@/assets/images/Keripik Kimpul 100g BBQ Pedas.png';
@@ -60,7 +60,7 @@ export default async function KeripikKimpulProposalPage() {
               {/* Logo kecil + brand */}
               <div className="flex items-center gap-3 mb-4">
                 <div className="logo-float flex-shrink-0">
-                  <Image src={logo} alt="Logo Teh Risma" width={56} height={56} className="rounded-full border-2 border-white shadow-lg object-cover" />
+                  <Image src={logo} alt="Logo Karya Putra" width={56} height={56} className="rounded-full border-2 border-white shadow-lg object-cover" />
                 </div>
                 <p className="text-xs text-amber-700 font-semibold tracking-wide">{branding.brandName}</p>
               </div>

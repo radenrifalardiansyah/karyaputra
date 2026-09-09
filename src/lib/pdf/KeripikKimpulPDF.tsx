@@ -184,7 +184,7 @@ export default function KeripikKimpulPDF({ logo, imgOri, imgBBQ, imgBBQPdas, img
       title={`Proposal Kerjasama Keripik Kimpul - ${brandName}`}
       author={brandName}
       subject="Proposal Kerjasama Titip Jual / Reseller Keripik Kimpul Talas Balitung"
-      keywords="proposal, keripik kimpul, talas, kerjasama, titip jual, reseller, cemilan teh risma, bogor"
+      keywords="proposal, keripik kimpul, talas, kerjasama, titip jual, reseller, karya putra, bogor"
     >
 
       {/* ══ PAGE 1 – COVER ══════════════════════════════════════════════════ */}
@@ -593,7 +593,7 @@ export default function KeripikKimpulPDF({ logo, imgOri, imgBBQ, imgBBQPdas, img
           <View style={s.contactRow}>
             {[
               { l: 'WhatsApp', v: '+62 812-1213-2014', s: 'Chat / Telepon — Senin-Sabtu 08.00-20.00' },
-              { l: 'Website', v: 'cemilantehrisma.vercel.app', s: 'Lihat katalog & pesan online' },
+              { l: 'Website', v: 'karyaputra.vercel.app', s: 'Lihat katalog & pesan online' },
               { l: 'Lokasi', v: 'Bogor, Jawa Barat', s: 'Pengiriman area Bogor & sekitarnya' },
             ].map(c => (
               <View key={c.l} style={s.contactCard}>

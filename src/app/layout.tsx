@@ -36,11 +36,11 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       'Toko cemilan khas Bogor: Keripik Kimpul Talas Balitung renyah (3 rasa) & Mie Kremes crispy. Halal, tanpa pengawet. Pesan langsung via WhatsApp, pengiriman ke seluruh Indonesia.',
     keywords: [
-      'keripik kimpul', 'keripik talas', 'keripik bogor', 'cemilan teh risma',
+      'keripik kimpul', 'keripik talas', 'keripik bogor', 'karya putra bogor',
       'keripik kimpul original', 'keripik kimpul bbq pedas', 'keripik kimpul jagung',
       'mie kremes', 'mie kremes bogor', 'mie kremes crispy', 'cemilan halal',
       'oleh oleh bogor', 'snack bogor', 'cemilan renyah', 'jual keripik kimpul',
-      'beli keripik kimpul', 'cemilan tanpa pengawet', 'warung teh risma',
+      'beli keripik kimpul', 'cemilan tanpa pengawet', 'toko karya putra',
     ],
     authors: [{ name: branding.legalName }],
     creator: branding.legalName,

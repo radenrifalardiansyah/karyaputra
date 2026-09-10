@@ -24,7 +24,7 @@ export async function GET(
     }
 
     const printedAt = new Date().toLocaleString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-    const data: InvoiceData = { ...saved, printedAt, logo: LOGO_DATA_URI, halalLogo: HALAL_DATA_URI };
+    const data: InvoiceData = { ...saved, printedAt, logo: branding.logo || LOGO_DATA_URI, halalLogo: HALAL_DATA_URI };
 
     const buffer = await renderToBuffer(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

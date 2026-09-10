@@ -81,7 +81,7 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-amber-700/60 shadow-lg flex-shrink-0">
-                <Image src={logo} alt={branding.brandName} fill className="object-cover" />
+                <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" />
               </div>
               <div>
                 <p className="font-display text-xl font-bold text-amber-200 leading-none">Karya</p>

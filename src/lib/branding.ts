@@ -55,9 +55,12 @@ export interface LiveBranding {
   mapsUrl: string;
   themeColor: string;
   themeBackgroundColor: string;
+  // Logo Toko dari admin (Cloudinary URL). null = admin belum upload logo custom —
+  // komponen pakai gambar statis @/assets/images/logo-karyaputra.jpeg sebagai fallback.
+  logo: string | null;
 }
 
-// Static fallback used when the admin hasn't set a field yet (or Firestore is
+// Static fallback used when the admin hasn't set a field yet (or Postgres is
 // unreachable) — see src/lib/server/branding.ts (server) and useLiveBranding.ts (client).
 export function defaultLiveBranding(): LiveBranding {
   return {
@@ -74,5 +77,6 @@ export function defaultLiveBranding(): LiveBranding {
     mapsUrl: SOCIAL.mapsUrl,
     themeColor: THEME_COLOR,
     themeBackgroundColor: THEME_BACKGROUND_COLOR,
+    logo: null,
   };
 }

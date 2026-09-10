@@ -14,6 +14,7 @@ interface SettingsDoc {
   mapsUrl?: string;
   storefrontThemeColor?: string;
   storefrontThemeBackgroundColor?: string;
+  logo?: string;
 }
 
 function instagramHandleFromUrl(url: string, fallback: string): string {
@@ -49,6 +50,7 @@ export const getCachedBranding = unstable_cache(
         mapsUrl: s.mapsUrl || fallback.mapsUrl,
         themeColor: s.storefrontThemeColor || fallback.themeColor,
         themeBackgroundColor: s.storefrontThemeBackgroundColor || fallback.themeBackgroundColor,
+        logo: s.logo || fallback.logo,
       };
     } catch (err) {
       console.error('[getCachedBranding]', err);

@@ -71,7 +71,7 @@ export default function AndroidInstallBanner() {
           <div className="p-4">
             <div className="flex items-start gap-3">
               <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 border border-amber-200">
-                <Image src={logo} alt={branding.brandName} fill className="object-cover" />
+                <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-display font-bold text-amber-950 text-sm leading-tight">

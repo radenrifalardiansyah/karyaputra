@@ -67,7 +67,7 @@ export default async function ProposalPage() {
             <div className="flex-shrink-0 flex flex-col items-center gap-3">
               <div className="logo-float">
                 <Image
-                  src={logo}
+                  src={branding.logo || logo}
                   alt={`Logo ${branding.brandName}`}
                   width={180}
                   height={180}
@@ -176,7 +176,7 @@ export default async function ProposalPage() {
         {/* Brand info */}
         <div className="bg-white rounded-2xl border border-amber-100 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5">
           <div className="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0 border-2 border-amber-100">
-            <Image src={logo} alt="Logo Karya Putra" width={56} height={56} className="object-cover w-full h-full" />
+            <Image src={branding.logo || logo} alt="Logo Karya Putra" width={56} height={56} className="object-cover w-full h-full" />
           </div>
           <div className="flex-1">
             <p className="text-xs font-bold tracking-widest text-amber-600 uppercase mb-1">Tentang Kami</p>

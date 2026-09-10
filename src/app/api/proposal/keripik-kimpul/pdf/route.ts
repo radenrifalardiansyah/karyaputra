@@ -18,7 +18,7 @@ function toDataUri(filename: string): string {
 export async function GET() {
   try {
     const branding = await getCachedBranding();
-    const logo      = toDataUri('logo-karyaputra.jpeg');
+    const logo      = branding.logo || toDataUri('logo-karyaputra.jpeg');
     const imgOri    = toDataUri('Keripik Kimpul 100g Original.png');
     const imgBBQ    = toDataUri('Keripik Kimpul 100g BBQ.png');
     const imgBBQPdas = toDataUri('Keripik Kimpul 100g BBQ Pedas.png');

@@ -48,7 +48,7 @@ export default function SplashScreen() {
             className="relative w-28 h-28 rounded-full overflow-hidden shadow-2xl mb-6"
             style={{ border: '4px solid #F59E0B' }}
           >
-            <Image src={logo} alt={branding.brandName} fill className="object-cover" priority />
+            <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" priority />
           </div>
 
           {/* Brand name */}

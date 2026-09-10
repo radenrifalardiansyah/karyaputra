@@ -18,7 +18,7 @@ function toDataUri(filename: string): string {
 export async function GET() {
   try {
     const branding = await getCachedBranding();
-    const logo     = toDataUri('logo-karyaputra.jpeg');
+    const logo     = branding.logo || toDataUri('logo-karyaputra.jpeg');
     const imgOri   = toDataUri('Mie Kremes 150g Original.png');
     const imgPdas  = toDataUri('Mie Kremes 150g Pedas.png');
     const halalLogo = toDataUri('logo-halal-indonesia.png');

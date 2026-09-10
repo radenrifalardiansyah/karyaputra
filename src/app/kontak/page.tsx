@@ -62,7 +62,7 @@ export default function KontakPage() {
           className="flex flex-col items-center text-center mb-8"
         >
           <div className="relative w-20 h-20 rounded-full overflow-hidden border-4 border-amber-200 shadow-lg mb-4">
-            <Image src={logo} alt={branding.brandName} fill className="object-cover" />
+            <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" />
           </div>
           <h1 className="font-display text-2xl font-bold text-amber-950 mb-1">{branding.brandName}</h1>
           <p className="text-amber-700/60 text-sm">{t.kontak.subtitle}</p>

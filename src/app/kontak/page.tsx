@@ -97,9 +97,9 @@ export default function KontakPage() {
           transition={{ delay: 0.12 }}
           whileTap={{ scale: 0.98 }}
           className="flex items-start gap-3 p-4 rounded-2xl border mb-4 w-full text-left"
-          style={{ background: 'rgba(217,119,6,0.07)', border: '1.5px solid rgba(217,119,6,0.2)' }}
+          style={{ background: 'rgba(22, 163, 74,0.07)', border: '1.5px solid rgba(22, 163, 74,0.2)' }}
         >
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(217,119,6,0.15)' }}>
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(22, 163, 74,0.15)' }}>
             <MapPin size={18} className="text-amber-600" />
           </div>
           <div className="flex-1">
@@ -120,9 +120,9 @@ export default function KontakPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.16 }}
           className="flex items-center gap-3 p-4 rounded-2xl border mb-6"
-          style={{ background: 'rgba(217,119,6,0.05)', border: '1.5px solid rgba(217,119,6,0.15)' }}
+          style={{ background: 'rgba(22, 163, 74,0.05)', border: '1.5px solid rgba(22, 163, 74,0.15)' }}
         >
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(217,119,6,0.12)' }}>
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(22, 163, 74,0.12)' }}>
             <Clock size={18} className="text-amber-600" />
           </div>
           <div>

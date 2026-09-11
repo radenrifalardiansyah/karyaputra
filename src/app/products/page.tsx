@@ -258,7 +258,7 @@ function ProductsPage() {
               }`}
               style={
                 activeCategory === tab.id
-                  ? { background: 'linear-gradient(135deg, #D97706, #F59E0B)' }
+                  ? { background: 'linear-gradient(135deg, #16A34A, #22C55E)' }
                   : {}
               }
             >

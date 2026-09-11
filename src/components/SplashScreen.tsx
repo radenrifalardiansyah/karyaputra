@@ -46,7 +46,7 @@ export default function SplashScreen() {
           {/* Logo — sudah tampil di splash native Android, jadi di sini diam saja (tidak animasi ulang) supaya menyatu, tidak terasa "muncul dua kali" */}
           <div
             className="relative w-28 h-28 rounded-full overflow-hidden shadow-2xl mb-6"
-            style={{ border: '4px solid #F59E0B' }}
+            style={{ border: '4px solid #22C55E' }}
           >
             <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" priority />
           </div>
@@ -66,7 +66,7 @@ export default function SplashScreen() {
             </p>
             <p
               className="font-display text-3xl font-bold leading-tight"
-              style={{ background: 'linear-gradient(135deg, #D97706, #F59E0B)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+              style={{ background: 'linear-gradient(135deg, #16A34A, #22C55E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
             >
               Putra
             </p>
@@ -78,7 +78,7 @@ export default function SplashScreen() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.55, duration: 0.4 }}
             className="text-sm mt-3"
-            style={{ color: '#B45309' }}
+            style={{ color: '#15803D' }}
           >
             {t.splash.tagline}
           </motion.p>
@@ -94,7 +94,7 @@ export default function SplashScreen() {
               <motion.div
                 key={i}
                 className="w-2 h-2 rounded-full"
-                style={{ background: '#F59E0B' }}
+                style={{ background: '#22C55E' }}
                 animate={{ scale: [1, 1.5, 1], opacity: [0.4, 1, 0.4] }}
                 transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.2 }}
               />

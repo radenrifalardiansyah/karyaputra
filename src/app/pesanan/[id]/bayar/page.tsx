@@ -157,14 +157,14 @@ export default function BayarPesananPage() {
                 <button
                   onClick={() => setMethod('transfer')}
                   className={`flex items-center justify-center gap-2 py-3.5 text-sm font-semibold transition-all ${method === 'transfer' ? 'text-white' : 'text-amber-700/60 bg-amber-50/50'}`}
-                  style={method === 'transfer' ? { background: 'linear-gradient(135deg, #D97706, #F59E0B)' } : {}}
+                  style={method === 'transfer' ? { background: 'linear-gradient(135deg, #16A34A, #22C55E)' } : {}}
                 >
                   <Landmark size={15} /> Transfer Bank
                 </button>
                 <button
                   onClick={() => setMethod('qris')}
                   className={`flex items-center justify-center gap-2 py-3.5 text-sm font-semibold transition-all ${method === 'qris' ? 'text-white' : 'text-amber-700/60 bg-amber-50/50'}`}
-                  style={method === 'qris' ? { background: 'linear-gradient(135deg, #D97706, #F59E0B)' } : {}}
+                  style={method === 'qris' ? { background: 'linear-gradient(135deg, #16A34A, #22C55E)' } : {}}
                 >
                   <QrCode size={15} /> QRIS
                 </button>
@@ -173,7 +173,7 @@ export default function BayarPesananPage() {
               <div className="p-5">
                 {method === 'transfer' ? (
                   paymentInfo?.bankAccountNumber ? (
-                    <div className="rounded-xl p-4" style={{ background: 'var(--surface-2, #FFF7EB)', border: '1px solid rgba(217,119,6,0.15)' }}>
+                    <div className="rounded-xl p-4" style={{ background: 'var(--surface-2, #FFF7EB)', border: '1px solid rgba(22, 163, 74,0.15)' }}>
                       <p className="text-amber-700/50 text-xs mb-1">{paymentInfo.bankName}</p>
                       <div className="flex items-center gap-2 mb-1.5">
                         <p className="font-display text-xl font-bold text-amber-950">{paymentInfo.bankAccountNumber}</p>

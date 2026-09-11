@@ -69,7 +69,7 @@ export default function ProductDetailClient() {
   const stockConfig = {
     ready:   { label: t.product.available,  Icon: CheckCircle, color: '#16A34A', bg: 'rgba(22,163,74,0.1)',  border: 'rgba(22,163,74,0.25)'  },
     habis:   { label: t.product.outOfStock, Icon: XCircle,     color: '#DC2626', bg: 'rgba(220,38,38,0.08)', border: 'rgba(220,38,38,0.22)'  },
-    open_po: { label: t.product.openPO,     Icon: Clock3,      color: '#D97706', bg: 'rgba(217,119,6,0.1)',  border: 'rgba(217,119,6,0.25)'  },
+    open_po: { label: t.product.openPO,     Icon: Clock3,      color: '#16A34A', bg: 'rgba(22, 163, 74,0.1)',  border: 'rgba(22, 163, 74,0.25)'  },
   };
   const stock = stockConfig[product.stock];
   const isAvailable = product.stock === 'ready' || product.stock === 'open_po';

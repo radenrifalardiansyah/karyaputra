@@ -12,14 +12,17 @@ const config: Config = {
         // Black & white redesign: "amber" is the site's structural chrome hue (text,
         // backgrounds, borders — used everywhere via amber-* utility classes), so we
         // override it here instead of touching every component. Shades 400-600 are
-        // deliberately left at Tailwind's default (warm gold) — that's the single
-        // accent color kept for buttons/CTAs/highlights per the black-and-white-plus-
-        // one-accent brief. Every other shade becomes true grayscale.
+        // the single accent color (green, matching the admin's default storefront
+        // theme color in branding.ts) kept for buttons/CTAs/highlights per the
+        // black-and-white-plus-one-accent brief. Every other shade is true grayscale.
         amber: {
           50:  "#FAFAFA",
           100: "#F0F0F0",
           200: "#DCDCDC",
           300: "#BFBFBF",
+          400: "#4ADE80",
+          500: "#22C55E",
+          600: "#16A34A",
           700: "#4D4D4D",
           800: "#2E2E2E",
           900: "#1A1A1A",

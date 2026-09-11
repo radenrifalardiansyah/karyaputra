@@ -88,7 +88,7 @@ export default function PanduanPage() {
       {/* Hero */}
       <section className="relative pt-28 pb-10 px-4 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(251,191,36,0.13) 0%, transparent 60%), #FFFFFF',
+          background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(74,222,128,0.13) 0%, transparent 60%), #FFFFFF',
         }} />
         <div className="relative max-w-3xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -153,7 +153,7 @@ export default function PanduanPage() {
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.28 }}
             >
-              <StepList steps={oSteps} color="#D97706" />
+              <StepList steps={oSteps} color="#16A34A" />
 
               {/* Info note: order tracking */}
               <motion.div
@@ -288,9 +288,9 @@ export default function PanduanPage() {
                   },
                   {
                     icon: Clock3,
-                    color: '#D97706',
-                    bg: 'rgba(217,119,6,0.1)',
-                    border: 'rgba(217,119,6,0.25)',
+                    color: '#16A34A',
+                    bg: 'rgba(22, 163, 74,0.1)',
+                    border: 'rgba(22, 163, 74,0.25)',
                     label: 'Purchase Order (PO)',
                     desc: locale === 'en'
                       ? 'Product is available via pre-order. Order now and we will process your request.'

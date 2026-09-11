@@ -109,7 +109,7 @@ export default function Navbar() {
                       ? 'text-white'
                       : 'text-amber-700/60 hover:text-amber-800'
                   }`}
-                  style={locale === l.code ? { background: 'linear-gradient(135deg, #D97706, #F59E0B)' } : {}}
+                  style={locale === l.code ? { background: 'linear-gradient(135deg, #16A34A, #22C55E)' } : {}}
                 >
                   {l.label}
                 </button>

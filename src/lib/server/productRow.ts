@@ -25,7 +25,7 @@ export function rowToProductData(row: ProductRow): Record<string, unknown> {
     stock: row.stock,
     stockQty: Number(row.stock_qty) || 0,
     gradient: row.gradient ?? 'from-amber-700 to-yellow-500',
-    bgColor: row.bg_color ?? '#B45309',
+    bgColor: row.bg_color ?? '#15803D',
     weight: row.weight ?? '',
     order: row.sort_order ?? undefined,
     published: row.published,

@@ -112,7 +112,7 @@ export default function ResellerPage() {
       {/* HERO */}
       <section className="relative pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(251,191,36,0.13) 0%, transparent 60%), #FFFFFF',
+          background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(74,222,128,0.13) 0%, transparent 60%), #FFFFFF',
         }} />
         <div className="relative max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -182,7 +182,7 @@ export default function ResellerPage() {
               >
                 {p.highlight && (
                   <div className="absolute top-0 left-0 right-0 text-center py-1.5 text-xs font-bold text-white"
-                    style={{ background: 'linear-gradient(90deg, #D97706, #F59E0B)' }}
+                    style={{ background: 'linear-gradient(90deg, #16A34A, #22C55E)' }}
                   >
                     {t.reseller.pakPopular}
                   </div>
@@ -286,7 +286,7 @@ export default function ResellerPage() {
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white flex-shrink-0"
-                  style={{ background: 'linear-gradient(135deg, #D97706, #F59E0B)' }}
+                  style={{ background: 'linear-gradient(135deg, #16A34A, #22C55E)' }}
                 >
                   {r.nama.charAt(0)}
                 </div>

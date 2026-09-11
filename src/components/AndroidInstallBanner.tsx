@@ -64,9 +64,9 @@ export default function AndroidInstallBanner() {
           exit={{ y: 120, opacity: 0 }}
           transition={{ type: 'spring', damping: 24, stiffness: 200 }}
           className="fixed bottom-20 left-3 right-3 z-[70] rounded-2xl shadow-2xl overflow-hidden"
-          style={{ background: '#FFFFFF', border: '1.5px solid rgba(217,119,6,0.25)' }}
+          style={{ background: '#FFFFFF', border: '1.5px solid rgba(22, 163, 74,0.25)' }}
         >
-          <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #D97706, #F59E0B)' }} />
+          <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #16A34A, #22C55E)' }} />
 
           <div className="p-4">
             <div className="flex items-start gap-3">
@@ -99,7 +99,7 @@ export default function AndroidInstallBanner() {
               <button
                 onClick={handleInstall}
                 className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-[12px] font-semibold text-white transition-colors"
-                style={{ background: 'linear-gradient(135deg, #D97706, #F59E0B)' }}
+                style={{ background: 'linear-gradient(135deg, #16A34A, #22C55E)' }}
               >
                 <Download size={13} />
                 {t.pwaAndroid.install}

@@ -105,7 +105,7 @@ export default function AkunPage() {
           <div className="flex items-center gap-4">
             <div
               className="w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-display font-bold flex-shrink-0"
-              style={{ background: 'linear-gradient(135deg, #D97706, #F59E0B)' }}
+              style={{ background: 'linear-gradient(135deg, #16A34A, #22C55E)' }}
             >
               {initial}
             </div>

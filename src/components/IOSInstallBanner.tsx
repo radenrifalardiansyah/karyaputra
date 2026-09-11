@@ -58,9 +58,9 @@ export default function IOSInstallBanner() {
           exit={{ y: 120, opacity: 0 }}
           transition={{ type: 'spring', damping: 24, stiffness: 200 }}
           className="fixed bottom-20 left-3 right-3 z-[70] rounded-2xl shadow-2xl overflow-hidden"
-          style={{ background: '#FFFFFF', border: '1.5px solid rgba(217,119,6,0.25)' }}
+          style={{ background: '#FFFFFF', border: '1.5px solid rgba(22, 163, 74,0.25)' }}
         >
-          <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #D97706, #F59E0B)' }} />
+          <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #16A34A, #22C55E)' }} />
 
           <div className="p-4">
             <div className="flex items-start gap-3">
@@ -112,7 +112,7 @@ function OtherBrowserGuide({ t, onCopy, copied }: { t: Translation; onCopy: () =
       <button
         onClick={onCopy}
         className="mt-2.5 w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-[12px] font-semibold transition-colors"
-        style={{ background: copied ? '#16a34a' : '#D97706', color: '#fff' }}
+        style={{ background: copied ? '#16a34a' : '#16A34A', color: '#fff' }}
       >
         {copied ? <Check size={13} /> : <Copy size={13} />}
         {copied ? t.pwa.copied : t.pwa.copyLink}
@@ -187,7 +187,7 @@ function StepRow({ number, children }: { number: number; children: React.ReactNo
     <div className="flex items-start gap-2">
       <span
         className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold text-white flex-shrink-0 mt-0.5"
-        style={{ background: '#D97706' }}
+        style={{ background: '#16A34A' }}
       >
         {number}
       </span>

@@ -38,8 +38,8 @@ function Particle({ index }: { index: number }) {
 
 // Single accent + neutral card treatment for every slide — no more per-product hardcoded
 // hue, so the slider always matches whatever the admin's product catalog contains.
-const SLIDE_BADGE_COLOR = '#D97706';
-const SLIDE_GLOW = 'rgba(217,119,6,0.25)';
+const SLIDE_BADGE_COLOR = '#16A34A';
+const SLIDE_GLOW = 'rgba(22, 163, 74,0.25)';
 const SLIDE_BG = 'from-gray-50 to-white';
 const MAX_SLIDES = 6;
 
@@ -112,7 +112,7 @@ export default function Hero() {
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{
         background:
-          'radial-gradient(ellipse 80% 60% at 15% 60%, rgba(217,119,6,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 85% 25%, rgba(0,0,0,0.05) 0%, transparent 60%), #FFFFFF',
+          'radial-gradient(ellipse 80% 60% at 15% 60%, rgba(22, 163, 74,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 85% 25%, rgba(0,0,0,0.05) 0%, transparent 60%), #FFFFFF',
       }}
     >
       {/* Decorative blobs */}
@@ -120,7 +120,7 @@ export default function Hero() {
         animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 8, repeat: Infinity }}
         className="absolute -top-24 -left-24 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(217,119,6,0.16) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(22, 163, 74,0.16) 0%, transparent 70%)' }}
       />
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
@@ -137,7 +137,7 @@ export default function Hero() {
       {/* Dot grid */}
       <div
         className="absolute inset-0 opacity-[0.035] pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(circle, #D97706 1px, transparent 1px)', backgroundSize: '28px 28px' }}
+        style={{ backgroundImage: 'radial-gradient(circle, #16A34A 1px, transparent 1px)', backgroundSize: '28px 28px' }}
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
@@ -383,7 +383,7 @@ export default function Hero() {
                               style={{
                                 width: i === current ? 20 : 6,
                                 height: 6,
-                                background: i === current ? SLIDE_BADGE_COLOR : 'rgba(217,119,6,0.2)',
+                                background: i === current ? SLIDE_BADGE_COLOR : 'rgba(22, 163, 74,0.2)',
                               }}
                             />
                           ))}

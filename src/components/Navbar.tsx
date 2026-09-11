@@ -13,6 +13,7 @@ import { Locale } from '@/lib/i18n';
 import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { trackClick } from '@/lib/trackClick';
 import { useLiveBranding } from '@/lib/useLiveBranding';
+import { splitBrandName } from '@/lib/branding';
 
 const LOCALES: { code: Locale; label: string }[] = [
   { code: 'id', label: 'ID' },
@@ -27,6 +28,7 @@ export default function Navbar() {
   const { t, locale, setLocale } = useLanguage();
   const { customer: account } = useAuth();
   const branding = useLiveBranding();
+  const [brandFirst, brandRest] = splitBrandName(branding.brandName);
 
   const navLinks = [
     { href: '/', label: t.nav.home },
@@ -65,8 +67,8 @@ export default function Navbar() {
               <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" />
             </motion.div>
             <div className="flex items-baseline gap-1 leading-none">
-              <p className="font-display text-base sm:text-lg font-bold text-amber-800 leading-none">Karya</p>
-              <p className="font-display text-base sm:text-lg font-bold gradient-text leading-none">Putra</p>
+              <p className="font-display text-base sm:text-lg font-bold text-amber-800 leading-none">{brandFirst}</p>
+              {brandRest && <p className="font-display text-base sm:text-lg font-bold gradient-text leading-none">{brandRest}</p>}
             </div>
           </Link>
 

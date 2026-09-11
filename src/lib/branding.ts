@@ -23,6 +23,14 @@ export function formatWhatsappDisplay(raw: string): string {
   return raw.replace(/^62/, '0').replace(/(\d{4})(?=\d)/g, '$1-');
 }
 
+// Splits a brand name into the two-tone wordmark used in the navbar/footer/splash
+// (e.g. "Karya Putra" -> ["Karya", "Putra"]). Names without a space render as a
+// single-color word with an empty second part.
+export function splitBrandName(name: string): [string, string] {
+  const idx = name.indexOf(' ');
+  return idx === -1 ? [name, ''] : [name.slice(0, idx), name.slice(idx + 1)];
+}
+
 export const SOCIAL = {
   instagramHandle: 'karyaputra.id',
   instagramUrl: 'https://www.instagram.com/karyaputra.id',
@@ -42,6 +50,8 @@ export const BUSINESS = {
 export const THEME_COLOR = '#16A34A';
 export const THEME_BACKGROUND_COLOR = '#FFFFFF';
 
+export const OPEN_HOURS = 'Setiap Hari, 08.00 – 21.00';
+
 export const DEVELOPER = {
   name: 'PT. Eleven Digital Indonesia',
   url: 'https://eleven-digital.id',
@@ -56,6 +66,7 @@ export interface LiveBranding {
   whatsappUrl: string;
   address: string;
   city: string;
+  openHours: string;
   instagramUrl: string;
   instagramHandle: string;
   shopeeUrl: string;
@@ -78,6 +89,7 @@ export function defaultLiveBranding(): LiveBranding {
     whatsappUrl: SOCIAL.whatsappUrl,
     address: ADDRESS.streetAddress,
     city: `${ADDRESS.addressLocality}, ${ADDRESS.addressRegion}`,
+    openHours: OPEN_HOURS,
     instagramUrl: SOCIAL.instagramUrl,
     instagramHandle: SOCIAL.instagramHandle,
     shopeeUrl: SOCIAL.shopeeUrl,

@@ -9,6 +9,7 @@ interface SettingsDoc {
   whatsapp?: string;
   address?: string;
   city?: string;
+  openHours?: string;
   instagramUrl?: string;
   shopeeUrl?: string;
   mapsUrl?: string;
@@ -44,6 +45,7 @@ export const getCachedBranding = unstable_cache(
         whatsappUrl: `https://wa.me/${whatsappNumber}`,
         address: s.address || fallback.address,
         city: s.city || fallback.city,
+        openHours: s.openHours || fallback.openHours,
         instagramUrl,
         instagramHandle: instagramHandleFromUrl(instagramUrl, fallback.instagramHandle),
         shopeeUrl: s.shopeeUrl || fallback.shopeeUrl,

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Clock, Instagram, MessageCircle } from 'lucide-react';
-import { DEVELOPER, formatWhatsappDisplay } from '@/lib/branding';
+import { DEVELOPER, formatWhatsappDisplay, splitBrandName } from '@/lib/branding';
 import { useLiveBranding } from '@/lib/useLiveBranding';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLiveProducts } from '@/lib/useLiveProducts';
@@ -16,6 +16,7 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
   const branding = useLiveBranding();
   const products = useLiveProducts();
   const liveCategories = useLiveCategories();
+  const [brandFirst, brandRest] = splitBrandName(branding.brandName);
 
   const quickLinks = [
     { href: '/', label: t.footer.links.home },
@@ -50,8 +51,8 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
                 <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" />
               </div>
               <div className="flex items-baseline gap-1.5">
-                <p className="font-display text-xl font-bold text-amber-200 leading-none">Karya</p>
-                <p className="font-display text-xl font-bold gradient-text leading-none">Putra</p>
+                <p className="font-display text-xl font-bold text-amber-200 leading-none">{brandFirst}</p>
+                {brandRest && <p className="font-display text-xl font-bold gradient-text leading-none">{brandRest}</p>}
               </div>
             </div>
             <div className="mb-5 max-w-xs">
@@ -191,7 +192,7 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
               </li>
               <li className="flex items-center gap-2.5">
                 <Clock size={14} className="text-amber-100 flex-shrink-0" />
-                <span className="text-amber-50/90 text-sm">{t.footer.hours}</span>
+                <span className="text-amber-50/90 text-sm">{branding.openHours}</span>
               </li>
             </ul>
           </motion.div>

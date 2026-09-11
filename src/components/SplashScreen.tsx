@@ -6,12 +6,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLiveBranding } from '@/lib/useLiveBranding';
+import { splitBrandName } from '@/lib/branding';
 
 export default function SplashScreen() {
   // null = belum dicek (cover layar), true = tampilkan, false = sembunyikan
   const [visible, setVisible] = useState<boolean | null>(null);
   const { t } = useLanguage();
   const branding = useLiveBranding();
+  const [brandFirst, brandRest] = splitBrandName(branding.brandName);
 
   useEffect(() => {
     const isStandalone =
@@ -62,14 +64,16 @@ export default function SplashScreen() {
               className="font-display text-2xl sm:text-3xl font-bold leading-tight"
               style={{ color: '#333333' }}
             >
-              Karya
+              {brandFirst}
             </p>
-            <p
-              className="font-display text-2xl sm:text-3xl font-bold leading-tight"
-              style={{ background: 'linear-gradient(135deg, #16A34A, #22C55E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
-            >
-              Putra
-            </p>
+            {brandRest && (
+              <p
+                className="font-display text-2xl sm:text-3xl font-bold leading-tight"
+                style={{ background: 'linear-gradient(135deg, #16A34A, #22C55E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+              >
+                {brandRest}
+              </p>
+            )}
           </motion.div>
 
           {/* Tagline */}

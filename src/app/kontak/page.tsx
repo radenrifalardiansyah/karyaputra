@@ -127,7 +127,7 @@ export default function KontakPage() {
           </div>
           <div>
             <p className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-0.5">{t.kontak.hoursLabel}</p>
-            <p className="text-amber-950 text-sm font-medium">{t.kontak.hours}</p>
+            <p className="text-amber-950 text-sm font-medium">{branding.openHours}</p>
           </div>
         </motion.div>
 

@@ -77,12 +77,15 @@ export default function Hero() {
   };
 
   const categoryChips = liveCategories.slice(0, 4);
+  // Admin's "Kota" field is a full "Kota/Kabupaten, Provinsi" string (for the full
+  // address block) — the badge pill and stat card only have room for the city part.
+  const cityShort = branding.city.split(',')[0].trim() || branding.city;
 
   const stats = [
     { value: `${soldCount}`, label: t.hero.stats.sold, icon: '📦' },
     ...(reviewCount > 0 ? [{ value: `${rating?.toFixed(1)}★`, label: t.hero.stats.rating, icon: '⭐' }] : []),
     { value: `${liveProducts.length}`, label: t.hero.stats.variants, icon: '🛒' },
-    { value: 'Bogor', label: t.hero.stats.location, icon: '📍' },
+    { value: cityShort, label: t.hero.stats.location, icon: '📍' },
   ];
 
   const next = useCallback(() => {
@@ -155,7 +158,7 @@ export default function Hero() {
               <div className="relative w-7 h-7 rounded-full overflow-hidden border border-amber-300/60 flex-shrink-0">
                 <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" />
               </div>
-              {t.hero.brand(branding.brandName)}
+              {t.hero.brand(branding.brandName, cityShort)}
             </motion.div>
 
             {/* Headline — nama toko & tagline, keduanya diatur dari admin */}

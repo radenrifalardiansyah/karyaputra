@@ -22,6 +22,7 @@ import Navbar from '@/components/Navbar';
 import Cart from '@/components/Cart';
 import Footer from '@/components/Footer';
 import BottomNav from '@/components/BottomNav';
+import FormattedText from '@/components/FormattedText';
 
 function translateBadge(badge: string, t: import('@/lib/i18n').Translation): string {
   if (badge === 'Best Seller') return t.badge.bestSeller;
@@ -244,9 +245,7 @@ export default function ProductDetailClient() {
       <div className="h-px bg-amber-100 mb-4" />
 
       {/* Description */}
-      <p className="text-amber-800/75 text-sm leading-relaxed mb-5">
-        {lp.description}
-      </p>
+      <FormattedText text={lp.description} className="text-amber-800/75 text-sm leading-relaxed mb-5" />
 
       {/* Details */}
       <div className="bg-white rounded-2xl border border-amber-100 p-4 mb-6">

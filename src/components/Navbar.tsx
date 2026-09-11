@@ -64,9 +64,9 @@ export default function Navbar() {
             >
               <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" />
             </motion.div>
-            <div className="leading-none">
+            <div className="flex items-baseline gap-1 leading-none">
               <p className="font-display text-base sm:text-lg font-bold text-amber-800 leading-none">Karya</p>
-              <p className="font-display text-sm sm:text-base font-bold gradient-text leading-none">Putra</p>
+              <p className="font-display text-base sm:text-lg font-bold gradient-text leading-none">Putra</p>
             </div>
           </Link>
 

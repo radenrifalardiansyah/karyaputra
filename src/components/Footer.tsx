@@ -49,9 +49,9 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
               <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-amber-700/60 shadow-lg flex-shrink-0">
                 <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" />
               </div>
-              <div>
+              <div className="flex items-baseline gap-1.5">
                 <p className="font-display text-xl font-bold text-amber-200 leading-none">Karya</p>
-                <p className="font-display text-base font-bold gradient-text leading-none">Putra</p>
+                <p className="font-display text-xl font-bold gradient-text leading-none">Putra</p>
               </div>
             </div>
             <div className="mb-5 max-w-xs">

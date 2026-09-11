@@ -56,16 +56,16 @@ export default function SplashScreen() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.45 }}
-            className="text-center"
+            className="flex flex-wrap items-baseline justify-center gap-x-2"
           >
             <p
-              className="font-display text-3xl font-bold leading-tight"
+              className="font-display text-2xl sm:text-3xl font-bold leading-tight"
               style={{ color: '#333333' }}
             >
               Karya
             </p>
             <p
-              className="font-display text-3xl font-bold leading-tight"
+              className="font-display text-2xl sm:text-3xl font-bold leading-tight"
               style={{ background: 'linear-gradient(135deg, #16A34A, #22C55E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
             >
               Putra

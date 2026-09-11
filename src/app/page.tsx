@@ -58,7 +58,7 @@ export default async function HomePage() {
     '@type': 'Store',
     name: branding.brandName,
     alternateName: branding.legalName,
-    description: 'Toko cemilan khas Bogor: Keripik Kimpul Talas Balitung renyah dan Mie Kremes crispy. Halal, tanpa pengawet.',
+    description: 'Toko Tepung Aci khas Bogor. Bahan pilihan, harga bersahabat, tanpa pengawet.',
     url: SITE_URL,
     telephone: `+${branding.whatsappNumber}`,
     image: `${SITE_URL}/icon-512.png`,
@@ -84,7 +84,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main style={{ background: '#FFFBF5' }}>
+      <main style={{ background: '#FFFFFF' }}>
         <Navbar />
         <Cart />
         <Hero />

@@ -5,40 +5,25 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import bannerMieKremes1 from '@/assets/images/Banner Mie Kremes 1.png';
-import bannerMieKremes2 from '@/assets/images/Banner Mie Kremes 2.png';
-import bannerKeripik1 from '@/assets/images/Banner 1 Keripik Kimpul.png';
-import bannerKeripik2 from '@/assets/images/Banner 2 Keripik Kimpul.png';
 import { useLiveBranding } from '@/lib/useLiveBranding';
+import { useLiveProducts } from '@/lib/useLiveProducts';
+import { imageSrc } from '@/lib/liveProducts';
 
-const getBanners = (brandName: string) => [
-  {
-    id: 1,
-    image: bannerMieKremes1,
-    alt: `Mie Kremes ${brandName} — Crispy, Gurih, Bikin Nagih`,
-  },
-  {
-    id: 2,
-    image: bannerMieKremes2,
-    alt: `Mie Kremes ${brandName} — 2 Varian Rasa`,
-  },
-  {
-    id: 3,
-    image: bannerKeripik1,
-    alt: `Keripik Kimpul ${brandName} — Gurih Bikin Nagih`,
-  },
-  {
-    id: 4,
-    image: bannerKeripik2,
-    alt: `Keripik Kimpul ${brandName} — 3 Varian Rasa`,
-  },
-];
+const MAX_BANNERS = 4;
 
 const AUTOPLAY_INTERVAL = 5000;
 
 export default function ProductBanner() {
   const branding = useLiveBranding();
-  const banners = getBanners(branding.brandName);
+  const products = useLiveProducts();
+  const banners = products
+    .filter(p => p.images && p.images.length > 0)
+    .slice(0, MAX_BANNERS)
+    .map(p => ({
+      id: p.id,
+      image: p.images![0],
+      alt: `${p.name} — ${branding.brandName}`,
+    }));
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
   const [direction, setDirection] = useState(1);
@@ -59,10 +44,10 @@ export default function ProductBanner() {
   }, [current, goTo, banners.length]);
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || banners.length < 2) return;
     const timer = setInterval(next, AUTOPLAY_INTERVAL);
     return () => clearInterval(timer);
-  }, [paused, next]);
+  }, [paused, next, banners.length]);
 
   const variants = {
     enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
@@ -70,12 +55,14 @@ export default function ProductBanner() {
     exit: (dir: number) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
   };
 
+  if (banners.length === 0) return null;
+
   return (
     <div
       className="relative w-full overflow-hidden rounded-2xl shadow-md mb-8 select-none"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      style={{ aspectRatio: '2 / 1' }}
+      style={{ aspectRatio: '2 / 1', background: '#F5F5F5' }}
     >
       {/* Slides */}
       <AnimatePresence initial={false} custom={direction} mode="popLayout">
@@ -90,10 +77,10 @@ export default function ProductBanner() {
           className="absolute inset-0"
         >
           <Image
-            src={banners[current].image}
+            src={imageSrc(banners[current].image)}
             alt={banners[current].alt}
             fill
-            className="object-fill"
+            className="object-contain p-6"
             priority={current === 0}
             sizes="(max-width: 768px) 100vw, 1280px"
           />
@@ -101,22 +88,27 @@ export default function ProductBanner() {
       </AnimatePresence>
 
       {/* Prev / Next arrows */}
-      <button
-        onClick={prev}
-        className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center backdrop-blur-sm transition-all"
-        aria-label="Sebelumnya"
-      >
-        <ChevronLeft size={18} />
-      </button>
-      <button
-        onClick={next}
-        className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center backdrop-blur-sm transition-all"
-        aria-label="Berikutnya"
-      >
-        <ChevronRight size={18} />
-      </button>
+      {banners.length > 1 && (
+        <>
+          <button
+            onClick={prev}
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center backdrop-blur-sm transition-all"
+            aria-label="Sebelumnya"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            onClick={next}
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center backdrop-blur-sm transition-all"
+            aria-label="Berikutnya"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </>
+      )}
 
       {/* Dot indicators */}
+      {banners.length > 1 && (
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-2">
         {banners.map((_, i) => (
           <button
@@ -138,6 +130,7 @@ export default function ProductBanner() {
           </button>
         ))}
       </div>
+      )}
 
       {/* Autoplay pause indicator */}
       {paused && (

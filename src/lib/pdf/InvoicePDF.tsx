@@ -1,6 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
-import { THEME_COLOR } from '@/lib/branding';
+import { THEME_COLOR, formatWhatsappDisplay } from '@/lib/branding';
 
 export interface InvoiceItem {
   name:     string;
@@ -28,18 +28,18 @@ export interface InvoiceData {
 
 // ── Colour palette ────────────────────────────────────────────────────────────
 const C = {
-  primary:     '#B45309',
-  primaryDark: '#92400E',
+  primary:     '#333333',
+  primaryDark: '#1A1A1A',
   accent:      THEME_COLOR,
   accentLight: '#FEF3C7',
   accentMid:   '#FDE68A',
-  lightBg:     '#FFFBF2',
+  lightBg:     '#FFFFFF',
   white:       '#FFFFFF',
-  dark:        '#1C0A00',
-  body:        '#3D1A00',
-  muted:       '#78350F',
-  border:      '#FCD34D',
-  borderLight: '#FEF3C7',
+  dark:        '#111111',
+  body:        '#333333',
+  muted:       '#666666',
+  border:      '#E5E5E5',
+  borderLight: '#F5F5F5',
   green:       '#15803D',
   greenLight:  '#DCFCE7',
   gray:        '#6B7280',
@@ -185,7 +185,8 @@ const s = StyleSheet.create({
   footerSub:   { color: 'rgba(255,255,255,0.55)', fontSize: 7.5, marginTop: 2 },
 });
 
-export default function InvoicePDF({ data, brandName }: { data: InvoiceData; brandName: string }) {
+export default function InvoicePDF({ data, brandName, whatsappNumber }: { data: InvoiceData; brandName: string; whatsappNumber: string }) {
+  const wa = formatWhatsappDisplay(whatsappNumber);
   const itemCount    = data.items.reduce((s, i) => s + i.qty, 0);
   const hasDiscount  = data.discount && data.discount.amount > 0;
   const isKasir      = data.source === 'kasir';
@@ -209,7 +210,7 @@ export default function InvoicePDF({ data, brandName }: { data: InvoiceData; bra
             <View>
               <Text style={s.brandName}>{brandName}</Text>
               <Text style={s.brandSub}>Bogor, Jawa Barat · Indonesia</Text>
-              <Text style={s.brandSub2}>NIB: 0403260068412 · WA: 0812-1213-2014</Text>
+              <Text style={s.brandSub2}>NIB: 0403260068412 · WA: {wa}</Text>
             </View>
           </View>
           <View style={s.headerRight}>
@@ -308,9 +309,9 @@ export default function InvoicePDF({ data, brandName }: { data: InvoiceData; bra
                 <Text style={s.paymentTitle}>Informasi Pembayaran</Text>
                 {[
                   ['Transfer ke',   'Bank / e-wallet sesuai kesepakatan dengan Karya Putra'],
-                  ['Konfirmasi',    'Via WhatsApp: 0812-1213-2014 setelah transfer'],
+                  ['Konfirmasi',    `Via WhatsApp: ${wa} setelah transfer`],
                   ['Pengiriman',    'Dikirim setelah pembayaran dikonfirmasi'],
-                  ['Pertanyaan',    'WhatsApp: 0812-1213-2014 (Senin–Sabtu, 08.00–20.00)'],
+                  ['Pertanyaan',    `WhatsApp: ${wa} (Senin–Sabtu, 08.00–20.00)`],
                 ].map(([k, v]) => (
                   <View key={k} style={s.paymentRow}>
                     <Text style={s.paymentKey}>{k}</Text>
@@ -335,7 +336,7 @@ export default function InvoicePDF({ data, brandName }: { data: InvoiceData; bra
         <View style={s.footer} fixed>
           <View style={s.footerLeft}>
             <Text style={s.footerBold}>{brandName}</Text>
-            <Text style={s.footerText}>Bogor, Jawa Barat · WA: 0812-1213-2014 · NIB: 0403260068412</Text>
+            <Text style={s.footerText}>Bogor, Jawa Barat · WA: {wa} · NIB: 0403260068412</Text>
           </View>
           <View style={s.footerRight}>
             <Text style={s.footerThank}>Terima kasih sudah berbelanja!</Text>

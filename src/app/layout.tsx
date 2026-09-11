@@ -30,17 +30,14 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      default: `${branding.brandName} — Keripik Kimpul & Mie Kremes Bogor`,
+      default: `${branding.brandName} — Tepung Aci Bogor`,
       template: `%s | ${branding.brandName}`,
     },
     description:
-      'Toko cemilan khas Bogor: Keripik Kimpul Talas Balitung renyah (3 rasa) & Mie Kremes crispy. Halal, tanpa pengawet. Pesan langsung via WhatsApp, pengiriman ke seluruh Indonesia.',
+      'Toko Tepung Aci khas Bogor. Bahan pilihan, harga bersahabat, tanpa pengawet. Pesan langsung via WhatsApp, pengiriman ke seluruh Indonesia.',
     keywords: [
-      'keripik kimpul', 'keripik talas', 'keripik bogor', 'karya putra bogor',
-      'keripik kimpul original', 'keripik kimpul bbq pedas', 'keripik kimpul jagung',
-      'mie kremes', 'mie kremes bogor', 'mie kremes crispy', 'cemilan halal',
-      'oleh oleh bogor', 'snack bogor', 'cemilan renyah', 'jual keripik kimpul',
-      'beli keripik kimpul', 'cemilan tanpa pengawet', 'toko karya putra',
+      'tepung aci', 'tepung aci bogor', 'tepung aci berkualitas', 'karya putra bogor',
+      'jual tepung aci', 'beli tepung aci', 'toko tepung aci', 'toko karya putra',
     ],
     authors: [{ name: branding.legalName }],
     creator: branding.legalName,
@@ -51,8 +48,8 @@ export async function generateMetadata(): Promise<Metadata> {
       googleBot: { index: true, follow: true },
     },
     openGraph: {
-      title: `${branding.brandName} — Keripik Kimpul & Mie Kremes Bogor`,
-      description: 'Keripik Kimpul renyah & Mie Kremes crispy khas Bogor. Halal, tanpa pengawet. Pesan via WhatsApp!',
+      title: `${branding.brandName} — Tepung Aci Bogor`,
+      description: 'Tepung Aci berkualitas khas Bogor. Halal, tanpa pengawet. Pesan via WhatsApp!',
       type: 'website',
       locale: 'id_ID',
       siteName: branding.brandName,
@@ -60,8 +57,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${branding.brandName} — Keripik Kimpul & Mie Kremes Bogor`,
-      description: 'Keripik Kimpul renyah & Mie Kremes crispy khas Bogor. Halal, tanpa pengawet.',
+      title: `${branding.brandName} — Tepung Aci Bogor`,
+      description: 'Tepung Aci berkualitas khas Bogor. Halal, tanpa pengawet.',
     },
     alternates: {
       canonical: SITE_URL,

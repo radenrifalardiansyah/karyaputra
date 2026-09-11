@@ -63,7 +63,7 @@ function RegisterForm() {
   };
 
   return (
-    <main className="min-h-screen" style={{ background: '#FFFBF5' }}>
+    <main className="min-h-screen" style={{ background: '#FFFFFF' }}>
       <Navbar />
       <div className="max-w-md mx-auto px-4 pt-28 sm:pt-32 pb-20">
         <h1 className="font-display text-3xl font-bold text-amber-950 mb-1">Daftar Akun</h1>

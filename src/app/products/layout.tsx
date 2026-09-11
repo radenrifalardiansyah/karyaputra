@@ -6,15 +6,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const branding = await getCachedBranding();
   return {
     title: 'Semua Produk',
-    description: 'Lihat semua produk Karya Putra: Keripik Kimpul (Original, BBQ Pedas, Jagung) & Mie Kremes (Original, Pedas). Tersedia ukuran 100g, 150g, 250g, dan paket hemat.',
+    description: 'Lihat semua produk Tepung Aci Karya Putra. Bahan pilihan, harga bersahabat, tanpa pengawet.',
     keywords: [
-      'beli keripik kimpul bogor', 'mie kremes online', 'cemilan halal bogor',
-      'keripik kimpul harga', 'mie kremes pedas', 'paket cemilan hemat',
-      'oleh oleh khas bogor murah',
+      'beli tepung aci bogor', 'tepung aci online', 'tepung aci halal bogor',
+      'harga tepung aci', 'oleh oleh khas bogor murah',
     ],
     openGraph: {
       title: `Semua Produk | ${branding.brandName}`,
-      description: 'Keripik Kimpul & Mie Kremes Bogor. Halal, renyah, tanpa pengawet. Pesan via WhatsApp!',
+      description: 'Tepung Aci Bogor. Halal, tanpa pengawet. Pesan via WhatsApp!',
       url: `${SITE_URL}/products`,
     },
     alternates: {

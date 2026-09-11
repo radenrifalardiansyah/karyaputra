@@ -1,9 +1,10 @@
 import type { MetadataRoute } from 'next';
-import { products } from '@/lib/products';
+import { getAllMergedProducts } from '@/lib/server/getProduct';
 import { SITE_URL } from '@/lib/branding';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  const products = await getAllMergedProducts([]);
 
   return [
     {

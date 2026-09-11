@@ -30,7 +30,7 @@ export default function SplashScreen() {
 
   // Cover layar sebelum useEffect selesai — mencegah konten halaman terlihat sekilas
   if (visible === null) {
-    return <div className="fixed inset-0 z-[999]" style={{ background: '#FFFBF5' }} />;
+    return <div className="fixed inset-0 z-[999]" style={{ background: '#FFFFFF' }} />;
   }
 
   return (
@@ -41,7 +41,7 @@ export default function SplashScreen() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: 'easeInOut' }}
           className="fixed inset-0 z-[999] flex flex-col items-center justify-center"
-          style={{ background: '#FFFBF5' }}
+          style={{ background: '#FFFFFF' }}
         >
           {/* Logo — sudah tampil di splash native Android, jadi di sini diam saja (tidak animasi ulang) supaya menyatu, tidak terasa "muncul dua kali" */}
           <div
@@ -60,7 +60,7 @@ export default function SplashScreen() {
           >
             <p
               className="font-display text-3xl font-bold leading-tight"
-              style={{ color: '#78350F' }}
+              style={{ color: '#333333' }}
             >
               Karya
             </p>

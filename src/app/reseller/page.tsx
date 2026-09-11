@@ -17,24 +17,24 @@ import { useLiveBranding } from '@/lib/useLiveBranding';
 
 const pakets = [
   {
-    id: 'Paket Krenyes Pemula (10 pcs) - Rp 90.000',
-    nama: 'Krenyes Pemula', emoji: '🌱',
+    id: 'Paket Pemula (10 pcs) - Rp 90.000',
+    nama: 'Pemula', emoji: '🌱',
     pcs: 10, modal: 90000, hargaJual: 10000,
-    color: 'from-amber-500 to-yellow-400', border: 'border-amber-300', bg: 'bg-amber-50',
+    color: 'from-gray-800 to-gray-600', border: 'border-gray-300', bg: 'bg-gray-50',
     highlight: false,
   },
   {
-    id: 'Paket Kremes Nagih (20 pcs) - Rp 170.000',
-    nama: 'Kremes Nagih', emoji: '🔥',
+    id: 'Paket Nagih (20 pcs) - Rp 170.000',
+    nama: 'Nagih', emoji: '🔥',
     pcs: 20, modal: 170000, hargaJual: 10000,
-    color: 'from-orange-500 to-amber-400', border: 'border-orange-300', bg: 'bg-orange-50',
+    color: 'from-amber-600 to-amber-500', border: 'border-amber-400', bg: 'bg-amber-50',
     highlight: true,
   },
   {
-    id: 'Paket Kriuk Maksimal (30 pcs) - Rp 240.000',
-    nama: 'Kriuk Maksimal', emoji: '💎',
+    id: 'Paket Maksimal (30 pcs) - Rp 240.000',
+    nama: 'Maksimal', emoji: '💎',
     pcs: 30, modal: 240000, hargaJual: 10000,
-    color: 'from-rose-500 to-orange-400', border: 'border-rose-300', bg: 'bg-rose-50',
+    color: 'from-black to-gray-800', border: 'border-gray-800', bg: 'bg-gray-100',
     highlight: false,
   },
 ];
@@ -105,14 +105,14 @@ export default function ResellerPage() {
     }`;
 
   return (
-    <main className="min-h-screen" style={{ background: '#FFFBF5' }}>
+    <main className="min-h-screen" style={{ background: '#FFFFFF' }}>
       <Navbar />
       <Cart />
 
       {/* HERO */}
       <section className="relative pt-28 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(251,191,36,0.13) 0%, transparent 60%), #FFFBF5',
+          background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(251,191,36,0.13) 0%, transparent 60%), #FFFFFF',
         }} />
         <div className="relative max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -125,7 +125,7 @@ export default function ResellerPage() {
             className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold mb-4"
           >
             <span className="text-amber-950">{t.reseller.heroTitle1} </span>
-            <span className="gradient-text">Mie Kremes</span>
+            <span className="gradient-text">Tepung Aci</span>
             <br />
             <span className="text-amber-800">{t.reseller.heroTitle2}</span>
           </motion.h1>
@@ -177,12 +177,12 @@ export default function ResellerPage() {
                 initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.1 }} whileHover={{ y: -5 }}
                 className={`relative bg-white rounded-3xl border-2 shadow-sm overflow-hidden transition-all ${
-                  p.highlight ? 'border-orange-400 shadow-orange-100 shadow-lg' : 'border-amber-100'
+                  p.highlight ? 'border-amber-400 shadow-amber-100 shadow-lg' : 'border-amber-100'
                 }`}
               >
                 {p.highlight && (
                   <div className="absolute top-0 left-0 right-0 text-center py-1.5 text-xs font-bold text-white"
-                    style={{ background: 'linear-gradient(90deg, #f97316, #D97706)' }}
+                    style={{ background: 'linear-gradient(90deg, #D97706, #F59E0B)' }}
                   >
                     {t.reseller.pakPopular}
                   </div>
@@ -190,7 +190,7 @@ export default function ResellerPage() {
                 <div className={`bg-gradient-to-br ${p.color} p-6 ${p.highlight ? 'pt-9' : 'pt-6'} text-white text-center`}>
                   <div className="text-4xl mb-2">{p.emoji}</div>
                   <h3 className="font-display text-xl font-bold mb-1">{t.reseller.pakPrefix} {p.nama}</h3>
-                  <p className="text-white/80 text-sm">{p.pcs} pcs Mie Kremes</p>
+                  <p className="text-white/80 text-sm">{p.pcs} pcs Tepung Aci</p>
                 </div>
 
                 <div className="p-5 space-y-3">

@@ -64,7 +64,7 @@ export default function AndroidInstallBanner() {
           exit={{ y: 120, opacity: 0 }}
           transition={{ type: 'spring', damping: 24, stiffness: 200 }}
           className="fixed bottom-20 left-3 right-3 z-[70] rounded-2xl shadow-2xl overflow-hidden"
-          style={{ background: '#FFFBF5', border: '1.5px solid rgba(217,119,6,0.25)' }}
+          style={{ background: '#FFFFFF', border: '1.5px solid rgba(217,119,6,0.25)' }}
         >
           <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #D97706, #F59E0B)' }} />
 

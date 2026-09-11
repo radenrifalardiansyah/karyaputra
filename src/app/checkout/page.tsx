@@ -135,14 +135,14 @@ export default function CheckoutPage() {
 
   if (authLoading || !account) {
     return (
-      <main className="min-h-screen flex items-center justify-center" style={{ background: '#FFFBF5' }}>
+      <main className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}>
         <p className="text-amber-700/60 text-sm">Memuat...</p>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen" style={{ background: '#FFFBF5' }}>
+    <main className="min-h-screen" style={{ background: '#FFFFFF' }}>
       <Navbar />
       <Cart />
 

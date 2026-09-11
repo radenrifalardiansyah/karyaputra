@@ -9,32 +9,14 @@ import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getProductLocale } from '@/lib/product-translations';
 import { useLiveProducts } from '@/lib/useLiveProducts';
+import { useLiveCategories } from '@/lib/useLiveCategories';
 import { useReviewStats } from '@/lib/useReviewStats';
 import { useLiveBranding } from '@/lib/useLiveBranding';
-
-import imgOriOri100  from '@/assets/images/Keripik Kimpul 100g Original.png';
-import imgOriBBQ100  from '@/assets/images/Keripik Kimpul 100g BBQ Pedas.png';
-import imgOriJgn100  from '@/assets/images/Keripik Kimpul 100g Jagung.png';
-import imgMieOri150  from '@/assets/images/Mie Kremes 150g Original.png';
-import imgMiePdas150 from '@/assets/images/Mie Kremes 150g Pedas.png';
-
-// Presentational-only styling per slide (not admin-editable). Name/price/weight/badge
-// are pulled live from the product catalog below so the hero always matches the admin.
-const slideMeta = [
-  { productId: 'mk-ori-150', image: imgMieOri150, badgeColor: '#C2410C', glow: 'rgba(194,65,12,0.28)', bg: 'from-orange-100 to-amber-50', group: 'mie' as const },
-  { productId: 'mk-pdas-150', image: imgMiePdas150, badgeColor: '#BE123C', glow: 'rgba(190,18,60,0.25)', bg: 'from-rose-100 to-pink-50', group: 'mie' as const },
-  { productId: 'kk-ori-100', image: imgOriOri100, badgeColor: '#D97706', glow: 'rgba(217,119,6,0.35)', bg: 'from-amber-100 to-amber-50', group: 'keripik' as const },
-  { productId: 'kk-bbq-100', image: imgOriBBQ100, badgeColor: '#B91C1C', glow: 'rgba(185,28,28,0.25)', bg: 'from-red-100 to-orange-50', group: 'keripik' as const },
-  { productId: 'kk-jgn-100', image: imgOriJgn100, badgeColor: '#CA8A04', glow: 'rgba(202,138,4,0.3)', bg: 'from-yellow-100 to-amber-50', group: 'keripik' as const },
-  // Basreng is Firestore-only (admin-added, no bundled static entry), so the fallback
-  // image points at its live Cloudinary photo instead of a local static import.
-  { productId: 'Fj3ix8FZucBIdiwMIiLh', image: 'https://res.cloudinary.com/cemilanttehrisma/image/upload/v1787195035/uploads/ddm0pomh7zj4smplx51q.jpg', badgeColor: '#0369A1', glow: 'rgba(3,105,161,0.25)', bg: 'from-sky-100 to-cyan-50', group: 'basreng' as const },
-  { productId: 'NrLK4gFF0gQr81Yt3KjF', image: 'https://res.cloudinary.com/cemilanttehrisma/image/upload/v1787193959/uploads/syst2uyvzznjxqroywal.jpg', badgeColor: '#0F766E', glow: 'rgba(15,118,110,0.25)', bg: 'from-teal-100 to-emerald-50', group: 'basreng' as const },
-];
+import { imageSrc } from '@/lib/liveProducts';
 
 const formatPrice = (price: number) => `Rp ${price.toLocaleString('id-ID')}`;
 
-const particles = ['🥔', '🌶️', '🌽', '✨', '⭐', '🌿', '💫'];
+const particles = ['✨', '⭐', '🌿', '💫'];
 
 function Particle({ index }: { index: number }) {
   const emoji = particles[index % particles.length];
@@ -54,76 +36,47 @@ function Particle({ index }: { index: number }) {
   );
 }
 
+// Single accent + neutral card treatment for every slide — no more per-product hardcoded
+// hue, so the slider always matches whatever the admin's product catalog contains.
+const SLIDE_BADGE_COLOR = '#D97706';
+const SLIDE_GLOW = 'rgba(217,119,6,0.25)';
+const SLIDE_BG = 'from-gray-50 to-white';
+const MAX_SLIDES = 6;
 
 export default function Hero() {
   const { t, locale } = useLanguage();
   const branding = useLiveBranding();
   const liveProducts = useLiveProducts();
+  const liveCategories = useLiveCategories();
   const { soldCount, reviewCount, rating } = useReviewStats();
 
   const [current, setCurrent] = useState(0);
   const [dir, setDir] = useState(1);
   const [paused, setPaused] = useState(false);
 
-  const slides = slideMeta
-    .map(meta => {
-      const product = liveProducts.find(p => p.id === meta.productId);
-      if (!product) return null;
-      return {
-        ...meta,
-        image: product.images?.[0] ?? meta.image,
-        name: product.name,
-        weight: product.weight,
-        price: formatPrice(product.price),
-        badge: product.badge ?? 'New',
-      };
-    })
-    .filter((s): s is NonNullable<typeof s> => Boolean(s));
+  const slides = liveProducts
+    .filter(p => p.images && p.images.length > 0)
+    .slice(0, MAX_SLIDES)
+    .map(product => ({
+      productId: product.id,
+      image: product.images![0],
+      name: product.name,
+      weight: product.weight,
+      price: formatPrice(product.price),
+      badge: product.badge ?? 'New',
+    }));
 
   const slide = slides[current] ?? slides[0];
-  const slideDisplayName = getProductLocale(slide.productId, locale, { name: slide.name, description: '', details: [] }).name;
+  const slideDisplayName = slide
+    ? getProductLocale(slide.productId, locale, { name: slide.name, description: '', details: [] }).name
+    : '';
 
-  const cheapestPriceIn = (group: 'mie' | 'keripik' | 'basreng') => {
-    const prices = slides.filter(s => s.group === group).map(s =>
-      liveProducts.find(p => p.id === s.productId)?.price ?? 0
-    );
-    return prices.length ? formatPrice(Math.min(...prices)) : '';
-  };
   const cheapestPriceOverall = () => {
     const prices = liveProducts.map(p => p.price).filter(p => p > 0);
     return prices.length ? formatPrice(Math.min(...prices)) : '';
   };
 
-  const groupContent = {
-    keripik: {
-      title1: t.hero.keripik.title1, title2: t.hero.keripik.title2,
-      sub1: t.hero.keripik.sub1, sub2: t.hero.keripik.sub2,
-      flavors: [
-        { emoji: '🥔', label: t.hero.keripik.flavors[0], bg: 'bg-amber-100', text: 'text-amber-800' },
-        { emoji: '🌶️', label: t.hero.keripik.flavors[1], bg: 'bg-red-100',   text: 'text-red-700'   },
-        { emoji: '🌽', label: t.hero.keripik.flavors[2], bg: 'bg-yellow-100', text: 'text-yellow-700' },
-      ],
-      desc: t.hero.keripik.desc, price: cheapestPriceIn('keripik'),
-    },
-    mie: {
-      title1: t.hero.mie.title1, title2: t.hero.mie.title2,
-      sub1: t.hero.mie.sub1, sub2: t.hero.mie.sub2,
-      flavors: [
-        { emoji: '🍝', label: t.hero.mie.flavors[0], bg: 'bg-orange-100', text: 'text-orange-800' },
-        { emoji: '🌶️', label: t.hero.mie.flavors[1], bg: 'bg-red-100',   text: 'text-red-700'    },
-      ],
-      desc: t.hero.mie.desc, price: cheapestPriceIn('mie'),
-    },
-    basreng: {
-      title1: t.hero.basreng.title1, title2: t.hero.basreng.title2,
-      sub1: t.hero.basreng.sub1, sub2: t.hero.basreng.sub2,
-      flavors: [
-        { emoji: '🥩', label: t.hero.basreng.flavors[0], bg: 'bg-sky-100', text: 'text-sky-800' },
-        { emoji: '🌶️', label: t.hero.basreng.flavors[1], bg: 'bg-red-100', text: 'text-red-700' },
-      ],
-      desc: t.hero.basreng.desc, price: cheapestPriceIn('basreng'),
-    },
-  };
+  const categoryChips = liveCategories.slice(0, 4);
 
   const stats = [
     { value: `${soldCount}`, label: t.hero.stats.sold, icon: '📦' },
@@ -132,23 +85,21 @@ export default function Hero() {
     { value: 'Bogor', label: t.hero.stats.location, icon: '📍' },
   ];
 
-  const content = groupContent[slide.group as keyof typeof groupContent];
-
   const next = useCallback(() => {
     setDir(1);
-    setCurrent(i => (i + 1) % slides.length);
+    setCurrent(i => (slides.length ? (i + 1) % slides.length : 0));
   }, [slides.length]);
 
   const prev = () => {
     setDir(-1);
-    setCurrent(i => (i - 1 + slides.length) % slides.length);
+    setCurrent(i => (slides.length ? (i - 1 + slides.length) % slides.length : 0));
   };
 
   useEffect(() => {
-    if (paused) return;
-    const t = setInterval(next, 6000);
-    return () => clearInterval(t);
-  }, [paused, next]);
+    if (paused || slides.length < 2) return;
+    const timer = setInterval(next, 6000);
+    return () => clearInterval(timer);
+  }, [paused, next, slides.length]);
 
   const variants = {
     enter: (d: number) => ({ x: d > 0 ? 80 : -80, opacity: 0, scale: 0.92 }),
@@ -161,7 +112,7 @@ export default function Hero() {
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{
         background:
-          'radial-gradient(ellipse 80% 60% at 15% 60%, rgba(251,191,36,0.12) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 85% 25%, rgba(217,119,6,0.09) 0%, transparent 60%), #FFFBF5',
+          'radial-gradient(ellipse 80% 60% at 15% 60%, rgba(217,119,6,0.08) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 85% 25%, rgba(0,0,0,0.05) 0%, transparent 60%), #FFFFFF',
       }}
     >
       {/* Decorative blobs */}
@@ -169,13 +120,13 @@ export default function Hero() {
         animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 8, repeat: Infinity }}
         className="absolute -top-24 -left-24 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.22) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(217,119,6,0.16) 0%, transparent 70%)' }}
       />
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
         transition={{ duration: 10, repeat: Infinity, delay: 3 }}
         className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(185,28,28,0.1) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(0,0,0,0.06) 0%, transparent 70%)' }}
       />
 
       {/* Particles */}
@@ -202,75 +153,63 @@ export default function Hero() {
               className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-amber-100 border border-amber-300/60 text-amber-700 text-sm font-semibold mb-5"
             >
               <div className="relative w-7 h-7 rounded-full overflow-hidden border border-amber-300/60 flex-shrink-0">
-                <Image src={logo} alt="Karya Putra" fill className="object-cover" />
+                <Image src={branding.logo || logo} alt={branding.brandName} fill className="object-cover" />
               </div>
               {t.hero.brand(branding.brandName)}
             </motion.div>
 
-            {/* Headline — berubah sesuai group produk */}
-            <AnimatePresence mode="wait">
-              <motion.h1
-                key={`title-${slide.group}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-3"
-              >
-                <span className="text-amber-950">{content.title1} </span>
-                <span className="gradient-text">{content.title2}</span>
-                <br />
-                <span className="text-3xl sm:text-4xl lg:text-5xl text-amber-800">{content.sub1} </span>
-                <span className="text-3xl sm:text-4xl lg:text-5xl text-amber-600">{content.sub2}</span>
-              </motion.h1>
-            </AnimatePresence>
+            {/* Headline — nama toko & tagline, keduanya diatur dari admin */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-3"
+            >
+              <span className="text-amber-950">{t.hero.headline} </span>
+              <span className="gradient-text">{branding.brandName}</span>
+            </motion.h1>
 
-            {/* Flavor chips — berubah sesuai group produk */}
-            <AnimatePresence mode="wait">
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.05 }}
+              className="text-xl sm:text-2xl text-amber-800 mb-5"
+            >
+              {branding.tagline}
+            </motion.p>
+
+            {/* Category chips — langsung dari kategori yang diatur admin */}
+            {categoryChips.length > 0 && (
               <motion.div
-                key={`chips-${slide.group}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.35 }}
                 className="flex items-center gap-2 flex-wrap justify-center lg:justify-start mb-5"
               >
-                {content.flavors.map((f, i) => (
+                {categoryChips.map((c, i) => (
                   <motion.span
-                    key={f.label}
+                    key={c.id}
                     initial={{ opacity: 0, scale: 0.7 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: i * 0.07, type: 'spring' }}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold ${f.bg} ${f.text} border border-current/20`}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200"
                   >
-                    <span>{f.emoji}</span>
-                    {f.label}
+                    {c.emoji && <span>{c.emoji}</span>}
+                    {c.name}
                   </motion.span>
                 ))}
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-amber-600/60 text-xs font-medium"
-                >
-                  {t.hero.savingsAvailable}
-                </motion.span>
               </motion.div>
-            </AnimatePresence>
+            )}
 
             {/* Description */}
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={`desc-${slide.group}`}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.35 }}
-                className="text-amber-800/65 text-base sm:text-lg leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0"
-              >
-                {content.desc} <strong className="text-amber-700">{content.price}</strong>.
-              </motion.p>
-            </AnimatePresence>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="text-amber-800/65 text-base sm:text-lg leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0"
+            >
+              {t.hero.genericDesc} <strong className="text-amber-700">{cheapestPriceOverall()}</strong>.
+            </motion.p>
 
             {/* CTA */}
             <motion.div
@@ -325,158 +264,166 @@ export default function Hero() {
           </div>
 
           {/* ── RIGHT — Product Slider ────────────────────────────── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-            className="flex-1 flex items-center justify-center w-full"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-          >
-            <div className="relative w-full max-w-sm">
+          {slide && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+              className="flex-1 flex items-center justify-center w-full"
+              onMouseEnter={() => setPaused(true)}
+              onMouseLeave={() => setPaused(false)}
+            >
+              <div className="relative w-full max-w-sm">
 
-              {/* Glow blob behind card */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`glow-${current}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="absolute inset-0 rounded-3xl pointer-events-none blur-2xl scale-90"
-                  style={{ background: `radial-gradient(circle, ${slide.glow} 0%, transparent 70%)` }}
-                />
-              </AnimatePresence>
+                {/* Glow blob behind card */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`glow-${current}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="absolute inset-0 rounded-3xl pointer-events-none blur-2xl scale-90"
+                    style={{ background: `radial-gradient(circle, ${SLIDE_GLOW} 0%, transparent 70%)` }}
+                  />
+                </AnimatePresence>
 
-              {/* Main card */}
-              <div className="relative bg-white rounded-3xl shadow-2xl shadow-amber-200/50 border border-amber-100 overflow-hidden">
+                {/* Main card */}
+                <div className="relative bg-white rounded-3xl shadow-2xl shadow-amber-200/50 border border-amber-100 overflow-hidden">
 
-                {/* Image area */}
-                <div className={`relative h-64 sm:h-72 bg-gradient-to-br ${slide.bg} overflow-hidden`}>
-                  <AnimatePresence custom={dir} mode="wait">
-                    <motion.div
-                      key={current}
-                      custom={dir}
-                      variants={variants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
-                      className="absolute inset-0 flex items-center justify-center p-8"
-                    >
-                      <Image
-                        src={slide.image}
-                        alt={slideDisplayName}
-                        fill
-                        className="object-contain p-8"
-                        sizes="(max-width: 640px) 100vw, 400px"
-                        priority
-                      />
-                    </motion.div>
-                  </AnimatePresence>
+                  {/* Image area */}
+                  <div className={`relative h-64 sm:h-72 bg-gradient-to-br ${SLIDE_BG} overflow-hidden`}>
+                    <AnimatePresence custom={dir} mode="wait">
+                      <motion.div
+                        key={current}
+                        custom={dir}
+                        variants={variants}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{ duration: 0.45, ease: [0.32, 0.72, 0, 1] }}
+                        className="absolute inset-0 flex items-center justify-center p-8"
+                      >
+                        <Image
+                          src={imageSrc(slide.image)}
+                          alt={slideDisplayName}
+                          fill
+                          className="object-contain p-8"
+                          sizes="(max-width: 640px) 100vw, 400px"
+                          priority
+                        />
+                      </motion.div>
+                    </AnimatePresence>
 
-                  {/* Badge */}
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={`badge-${current}`}
-                      initial={{ opacity: 0, scale: 0.7, y: -8 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.7 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold text-white shadow-md"
-                      style={{ background: slide.badgeColor }}
-                    >
-                      {slide.badge === 'Best Seller' ? t.badge.bestSeller : slide.badge === 'Popular' ? t.badge.popular : t.badge.new}
-                    </motion.div>
-                  </AnimatePresence>
+                    {/* Badge */}
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={`badge-${current}`}
+                        initial={{ opacity: 0, scale: 0.7, y: -8 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.7 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold text-white shadow-md"
+                        style={{ background: SLIDE_BADGE_COLOR }}
+                      >
+                        {slide.badge === 'Best Seller' ? t.badge.bestSeller : slide.badge === 'Popular' ? t.badge.popular : t.badge.new}
+                      </motion.div>
+                    </AnimatePresence>
 
-                  {/* Prev / Next */}
-                  <button
-                    onClick={prev}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white shadow-md flex items-center justify-center text-amber-700 transition-all backdrop-blur-sm"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  <button
-                    onClick={next}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white shadow-md flex items-center justify-center text-amber-700 transition-all backdrop-blur-sm"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
+                    {/* Prev / Next */}
+                    {slides.length > 1 && (
+                      <>
+                        <button
+                          onClick={prev}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white shadow-md flex items-center justify-center text-amber-700 transition-all backdrop-blur-sm"
+                        >
+                          <ChevronLeft size={16} />
+                        </button>
+                        <button
+                          onClick={next}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white shadow-md flex items-center justify-center text-amber-700 transition-all backdrop-blur-sm"
+                        >
+                          <ChevronRight size={16} />
+                        </button>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Info area */}
+                  <div className="p-5">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={`info-${current}`}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <div className="flex items-start justify-between gap-2 mb-1">
+                          <h3 className="font-display text-base font-bold text-amber-950 leading-tight">
+                            {slideDisplayName}
+                          </h3>
+                          <span className="text-xs text-amber-600/70 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full flex-shrink-0">
+                            {slide.weight}
+                          </span>
+                        </div>
+                        <p className="font-display text-xl font-bold gradient-text">{slide.price}</p>
+                      </motion.div>
+                    </AnimatePresence>
+
+                    {/* Dot indicators */}
+                    {slides.length > 1 && (
+                      <div className="flex items-center justify-between mt-4">
+                        <div className="flex gap-1.5">
+                          {slides.map((_, i) => (
+                            <button
+                              key={i}
+                              onClick={() => { setDir(i > current ? 1 : -1); setCurrent(i); }}
+                              className="rounded-full transition-all duration-300"
+                              style={{
+                                width: i === current ? 20 : 6,
+                                height: 6,
+                                background: i === current ? SLIDE_BADGE_COLOR : 'rgba(217,119,6,0.2)',
+                              }}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-xs text-amber-600/50">{current + 1} / {slides.length}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                {/* Info area */}
-                <div className="p-5">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={`info-${current}`}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className="flex items-start justify-between gap-2 mb-1">
-                        <h3 className="font-display text-base font-bold text-amber-950 leading-tight">
-                          {slideDisplayName}
-                        </h3>
-                        <span className="text-xs text-amber-600/70 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full flex-shrink-0">
-                          {slide.weight}
-                        </span>
-                      </div>
-                      <p className="font-display text-xl font-bold gradient-text">{slide.price}</p>
-                    </motion.div>
-                  </AnimatePresence>
+                {/* Floating price card */}
+                <motion.div
+                  animate={{ y: [0, -8, 0], rotate: [-1, 1, -1] }}
+                  transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
+                  className="absolute -left-6 top-8 bg-white rounded-2xl p-3 border border-amber-200 shadow-lg z-10"
+                >
+                  <p className="text-[10px] text-amber-600/60">{t.hero.priceFrom}</p>
+                  <p className="font-display text-sm font-bold text-amber-800">{cheapestPriceOverall()}</p>
+                </motion.div>
 
-                  {/* Dot indicators */}
-                  <div className="flex items-center justify-between mt-4">
-                    <div className="flex gap-1.5">
-                      {slides.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={() => { setDir(i > current ? 1 : -1); setCurrent(i); }}
-                          className="rounded-full transition-all duration-300"
-                          style={{
-                            width: i === current ? 20 : 6,
-                            height: 6,
-                            background: i === current ? slide.badgeColor : 'rgba(217,119,6,0.2)',
-                          }}
-                        />
+                {/* Floating rating card — hanya tampil kalau sudah ada ulasan asli */}
+                {reviewCount > 0 && (
+                  <motion.div
+                    animate={{ y: [0, -6, 0], rotate: [1, -1, 1] }}
+                    transition={{ duration: 3, repeat: Infinity, delay: 1.2 }}
+                    className="absolute -right-6 bottom-20 bg-white rounded-2xl p-3 border border-amber-200 shadow-lg z-10"
+                  >
+                    <div className="flex gap-0.5 mb-0.5">
+                      {[1,2,3,4,5].map(s => (
+                        <Star key={s} size={8} className={s <= Math.round(rating ?? 0) ? 'text-amber-400 fill-amber-400' : 'text-amber-200 fill-amber-200'} />
                       ))}
                     </div>
-                    <span className="text-xs text-amber-600/50">{current + 1} / {slides.length}</span>
-                  </div>
-                </div>
+                    <p className="text-[10px] text-amber-800/70 font-semibold">
+                      {soldCount} {t.hero.soldSuffix}
+                    </p>
+                  </motion.div>
+                )}
               </div>
-
-              {/* Floating price card */}
-              <motion.div
-                animate={{ y: [0, -8, 0], rotate: [-1, 1, -1] }}
-                transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
-                className="absolute -left-6 top-8 bg-white rounded-2xl p-3 border border-amber-200 shadow-lg z-10"
-              >
-                <p className="text-[10px] text-amber-600/60">{t.hero.priceFrom}</p>
-                <p className="font-display text-sm font-bold text-amber-800">{cheapestPriceOverall()}</p>
-              </motion.div>
-
-              {/* Floating rating card — hanya tampil kalau sudah ada ulasan asli */}
-              {reviewCount > 0 && (
-                <motion.div
-                  animate={{ y: [0, -6, 0], rotate: [1, -1, 1] }}
-                  transition={{ duration: 3, repeat: Infinity, delay: 1.2 }}
-                  className="absolute -right-6 bottom-20 bg-white rounded-2xl p-3 border border-amber-200 shadow-lg z-10"
-                >
-                  <div className="flex gap-0.5 mb-0.5">
-                    {[1,2,3,4,5].map(s => (
-                      <Star key={s} size={8} className={s <= Math.round(rating ?? 0) ? 'text-amber-400 fill-amber-400' : 'text-amber-200 fill-amber-200'} />
-                    ))}
-                  </div>
-                  <p className="text-[10px] text-amber-800/70 font-semibold">
-                    {soldCount} {t.hero.soldSuffix}
-                  </p>
-                </motion.div>
-              )}
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
         </div>
 
         {/* Stats bar */}

@@ -28,7 +28,7 @@ export async function GET(
 
     const buffer = await renderToBuffer(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      React.createElement(InvoicePDF, { data, brandName: branding.brandName }) as any,
+      React.createElement(InvoicePDF, { data, brandName: branding.brandName, whatsappNumber: branding.whatsappNumber }) as any,
     );
 
     const safeName = saved.customerName.replace(/[^a-zA-Z0-9\s]/g, '').trim().replace(/\s+/g, '-');

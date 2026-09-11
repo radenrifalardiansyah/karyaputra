@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAnalyticsStats, PAGE_KEYS } from '@/lib/services/analyticsService';
-import { products, categoryData } from '@/lib/products';
+import { getAllMergedProducts } from '@/lib/server/getProduct';
+import { getSql } from '@/lib/db';
 
 function isAuthed(req: NextRequest) {
   const validUser = (process.env.ADMIN_USERNAME ?? '').trim();
@@ -25,6 +26,12 @@ export async function GET(req: NextRequest) {
       daily,
     } = await getAnalyticsStats(30);
 
+    const sql = getSql();
+    const [categoryRows, products] = await Promise.all([
+      sql<{ id: string; name: string | null; emoji: string | null }[]>`select id, name, emoji from categories`,
+      getAllMergedProducts([]),
+    ]);
+
     const paths = Object.entries(PAGE_KEYS)
       .map(([key, path]) => ({ path, visitors: pageAgg[key] ?? 0 }))
       .filter(p => p.visitors > 0)
@@ -35,8 +42,8 @@ export async function GET(req: NextRequest) {
       .filter(m => m.count > 0)
       .sort((a, b) => b.count - a.count);
 
-    const topCategories = categoryData
-      .map(c => ({ id: c.id, name: c.name, emoji: c.emoji, count: clickCategoryAgg[c.id] ?? 0 }))
+    const topCategories = categoryRows
+      .map(c => ({ id: c.id, name: c.name ?? c.id, emoji: c.emoji ?? '🏷️', count: clickCategoryAgg[c.id] ?? 0 }))
       .filter(c => c.count > 0)
       .sort((a, b) => b.count - a.count);
 

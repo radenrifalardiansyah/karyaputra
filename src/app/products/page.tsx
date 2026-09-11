@@ -115,7 +115,7 @@ function ProductsPage() {
   };
 
   return (
-    <main className="min-h-screen" style={{ background: '#FFFBF5' }}>
+    <main className="min-h-screen" style={{ background: '#FFFFFF' }}>
       <Navbar />
       <Cart />
 
@@ -342,7 +342,7 @@ function ProductsPage() {
 export default function ProductsPageWrapper() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFFBF5' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}>
         <motion.div
           animate={{ rotate: [0, 10, -10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}

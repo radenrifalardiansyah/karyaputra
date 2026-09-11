@@ -118,14 +118,14 @@ export default function OrdersPage() {
 
   if (authLoading || !account) {
     return (
-      <main className="min-h-screen flex items-center justify-center" style={{ background: '#FFFBF5' }}>
+      <main className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}>
         <p className="text-amber-700/60 text-sm">Memuat...</p>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen" style={{ background: '#FFFBF5' }}>
+    <main className="min-h-screen" style={{ background: '#FFFFFF' }}>
       <Navbar />
       <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-28 pb-40 md:pb-20">
         <Link

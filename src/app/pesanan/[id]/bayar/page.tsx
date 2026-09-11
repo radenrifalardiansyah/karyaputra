@@ -94,7 +94,7 @@ export default function BayarPesananPage() {
 
   if (authLoading || !account || (!order && !orderError)) {
     return (
-      <main className="min-h-screen flex items-center justify-center" style={{ background: '#FFFBF5' }}>
+      <main className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}>
         <p className="text-amber-700/60 text-sm">Memuat...</p>
       </main>
     );
@@ -102,7 +102,7 @@ export default function BayarPesananPage() {
 
   if (orderError || !order) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center gap-3" style={{ background: '#FFFBF5' }}>
+      <main className="min-h-screen flex flex-col items-center justify-center gap-3" style={{ background: '#FFFFFF' }}>
         <p className="text-amber-800/60 text-sm">Pesanan tidak ditemukan.</p>
         <Link href="/pesanan" className="btn-primary px-5 py-2.5 text-sm font-bold">Lihat Pesanan Saya</Link>
       </main>
@@ -113,7 +113,7 @@ export default function BayarPesananPage() {
   const hasProof = !!order.transferProofUrl && !reuploading;
 
   return (
-    <main className="min-h-screen" style={{ background: '#FFFBF5' }}>
+    <main className="min-h-screen" style={{ background: '#FFFFFF' }}>
       <Navbar />
       <div className="max-w-lg mx-auto px-4 sm:px-6 pt-28 pb-40 md:pb-20">
         <Link href="/pesanan" className="inline-flex items-center gap-1.5 text-amber-600/70 hover:text-amber-700 text-sm mb-5 transition-colors">

@@ -1,6 +1,6 @@
 export const BRAND_NAME = 'Karya Putra';
 export const LEGAL_NAME = 'Karya Putra';
-export const TAGLINE = 'Keripik Kimpul & Mie Kremes khas Bogor. Halal, renyah, tanpa pengawet.';
+export const TAGLINE = 'Tepung Aci berkualitas khas Bogor. Bahan pilihan, harga bersahabat.';
 
 export const SITE_URL = 'https://karyaputra.vercel.app';
 
@@ -16,10 +16,17 @@ export const ADDRESS = {
 
 export const ADDRESS_LINES = ['Jl. Batara Kp. Bubulak No. 54 RT01/RW03', 'Kel. Ciluar, Kec. Bogor Utara 16156'];
 
+// Formats a raw WhatsApp number (e.g. '6281212132014', country code included, no '+')
+// into the locally-familiar '0812-1213-2014' display form used across the storefront
+// and PDFs — always derived from the admin-configured number, never hardcoded.
+export function formatWhatsappDisplay(raw: string): string {
+  return raw.replace(/^62/, '0').replace(/(\d{4})(?=\d)/g, '$1-');
+}
+
 export const SOCIAL = {
-  instagramHandle: 'keripiktehrisma',
-  instagramUrl: 'https://www.instagram.com/keripiktehrisma',
-  shopeeUrl: 'https://shopee.co.id/tehrisma.id',
+  instagramHandle: 'karyaputra.id',
+  instagramUrl: 'https://www.instagram.com/karyaputra.id',
+  shopeeUrl: 'https://shopee.co.id/karyaputra.id',
   whatsappUrl: `https://wa.me/${WHATSAPP_NUMBER}`,
   mapsUrl: 'https://maps.app.goo.gl/h1AyYBaTH2tAqS588',
 };

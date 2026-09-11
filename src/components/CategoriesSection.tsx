@@ -3,29 +3,27 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { categoryData } from '@/lib/products';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLiveProducts } from '@/lib/useLiveProducts';
 import { useLiveCategories } from '@/lib/useLiveCategories';
 import { trackClick } from '@/lib/trackClick';
 
-// Fallback palette for admin-added categories that don't match one of the
-// 4 seeded names in categoryData (which carry their own hand-picked gradient).
-const FALLBACK_GRADIENTS = [
-  'from-rose-700 to-red-500',
-  'from-sky-700 to-cyan-500',
-  'from-lime-700 to-green-500',
-  'from-fuchsia-700 to-pink-500',
-  'from-blue-700 to-indigo-500',
-  'from-teal-700 to-emerald-500',
+// A small rotating gradient palette for category cards — categories themselves
+// (name/emoji/description) are entirely admin-managed, so there's no per-category
+// hardcoded style to look up; this just gives each card a distinct accent.
+const CARD_GRADIENTS = [
+  'from-amber-700 to-amber-500',
+  'from-gray-800 to-gray-600',
+  'from-amber-900 to-gray-700',
+  'from-gray-700 to-amber-600',
 ];
 
-function fallbackGradientFor(key: string) {
+function gradientFor(key: string) {
   let hash = 0;
   for (let i = 0; i < key.length; i++) {
     hash = (hash * 31 + key.charCodeAt(i)) | 0;
   }
-  return FALLBACK_GRADIENTS[Math.abs(hash) % FALLBACK_GRADIENTS.length];
+  return CARD_GRADIENTS[Math.abs(hash) % CARD_GRADIENTS.length];
 }
 
 export default function CategoriesSection() {
@@ -33,47 +31,18 @@ export default function CategoriesSection() {
   const products = useLiveProducts();
   const liveCategories = useLiveCategories();
 
-  const catNames = t.footer.categories;
-  const catDescs: Record<string, string> = {
-    mie: t.categories.descMie,
-    keripik: t.categories.descKeripik,
-    snack: t.categories.descSnack,
-    paket: t.categories.descPaket,
-  };
-
-  // Firestore has no `gradient` field — that stays a name match against the 4 seeded
-  // categories. Older category docs (migrated before the admin form had emoji/description
-  // fields) fall back the same way (e.g. 'mie' -> 'mie-kremes' kept the Indonesian name).
-  const styleByName = Object.fromEntries(
-    categoryData.map(c => [c.name.toLowerCase(), { emoji: c.emoji, description: catDescs[c.id] ?? c.description, gradient: c.gradient }])
-  ) as Record<string, { emoji: string; description: string; gradient: string }>;
-  const liveIds = new Set<string>(liveCategories.map(c => c.id));
   // The admin's live category collection is the master data — it decides which
-  // categories exist, what they're named, and (via the admin form) their icon/description.
-  const masterCards = liveCategories
+  // categories exist, and (via the admin form) their name/icon/description.
+  const cards = liveCategories
     .filter(c => products.some(p => p.category === c.id))
-    .map(c => {
-      const style = styleByName[c.name.toLowerCase()];
-      return {
-        id: c.id,
-        name: catNames[c.id as keyof typeof catNames] ?? c.name,
-        emoji: c.emoji || style?.emoji || '🏷️',
-        description: c.description || style?.description || t.categories.subtitle,
-        gradient: style?.gradient ?? fallbackGradientFor(c.id),
-        count: products.filter(p => p.category === c.id).length,
-      };
-    });
-  // Legacy safety net: a seeded id with real products that never got a matching
-  // Firestore doc (pre-dating admin-managed categories) still needs a card.
-  const legacyCards = categoryData
-    .filter(c => !liveIds.has(c.id) && products.some(p => p.category === c.id))
     .map(c => ({
-      ...c,
-      name: catNames[c.id as keyof typeof catNames] ?? c.name,
-      description: catDescs[c.id] ?? c.description,
+      id: c.id,
+      name: c.name,
+      emoji: c.emoji || '🏷️',
+      description: c.description || t.categories.subtitle,
+      gradient: gradientFor(c.id),
       count: products.filter(p => p.category === c.id).length,
     }));
-  const cards = [...masterCards, ...legacyCards];
 
   return (
     <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">

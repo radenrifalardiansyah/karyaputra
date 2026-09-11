@@ -12,13 +12,13 @@ import BottomNav from '@/components/BottomNav';
 import { useLiveBranding } from '@/lib/useLiveBranding';
 import { useLanguage } from '@/contexts/LanguageContext';
 import logo from '@/assets/images/logo-karyaputra.jpeg';
-import { LiveBranding } from '@/lib/branding';
+import { LiveBranding, formatWhatsappDisplay } from '@/lib/branding';
 
 const getContacts = (branding: LiveBranding) => [
   {
     icon: Phone,
     label: 'WhatsApp',
-    value: '0812-1213-2014',
+    value: formatWhatsappDisplay(branding.whatsappNumber),
     href: `https://wa.me/${branding.whatsappNumber}`,
     color: '#16A34A',
     bg: 'rgba(22,163,74,0.08)',
@@ -36,7 +36,7 @@ const getContacts = (branding: LiveBranding) => [
   {
     icon: ShoppingBag,
     label: 'Shopee',
-    value: 'tehrisma.id',
+    value: branding.shopeeUrl.split('/').filter(Boolean).pop() ?? 'Shopee',
     href: branding.shopeeUrl,
     color: '#EE4D2D',
     bg: 'rgba(238,77,45,0.08)',
@@ -49,7 +49,7 @@ export default function KontakPage() {
   const branding = useLiveBranding();
   const contacts = getContacts(branding);
   return (
-    <main className="min-h-screen pb-28" style={{ background: '#FFFBF5' }}>
+    <main className="min-h-screen pb-28" style={{ background: '#FFFFFF' }}>
       <Navbar />
       <Cart />
 

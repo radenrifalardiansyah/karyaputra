@@ -16,8 +16,7 @@ export const formatResellerMessage = (data: ResellerInfo): string => {
   const pengalamanLine = data.pengalaman.trim() || '-';
   const paketLine = data.paket || '-';
 
-  return `*PENDAFTARAN RESELLER MIE KREMES KARYA PUTRA*
-_Asli Gurihnya, Mantap Pedasnya!_
+  return `*PENDAFTARAN RESELLER TEPUNG ACI KARYA PUTRA*
 
 *Data Pendaftar*
 Nama      : ${data.nama}
@@ -30,7 +29,7 @@ Paket     : ${paketLine}
 Platform  : ${platformLine}
 Pengalaman: ${pengalamanLine}
 
-Saya ingin *secure slot* reseller Mie Kremes Karya Putra. Mohon info lebih lanjut, terima kasih!`.trim();
+Saya ingin *secure slot* reseller Tepung Aci Karya Putra. Mohon info lebih lanjut, terima kasih!`.trim();
 };
 
 export const openResellerWhatsApp = (data: ResellerInfo, whatsappNumber: string): void => {

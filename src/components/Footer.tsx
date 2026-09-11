@@ -2,41 +2,20 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { MapPin, Phone, Clock, Instagram, MessageCircle } from 'lucide-react';
-import { DEVELOPER } from '@/lib/branding';
+import { DEVELOPER, formatWhatsappDisplay } from '@/lib/branding';
 import { useLiveBranding } from '@/lib/useLiveBranding';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLiveProducts } from '@/lib/useLiveProducts';
 import { useLiveCategories } from '@/lib/useLiveCategories';
-import { categoryData } from '@/lib/products';
 import logo from '@/assets/images/logo-karyaputra.jpeg';
-import { useState, useEffect } from 'react';
-
-const footerDescs = {
-  id: [
-    'Keripik Kimpul renyah khas Bogor. Gurih, nagih, tanpa pengawet.',
-    'Mie Kremes crispy khas Bogor. Gurih, renyah, tanpa pengawet.',
-  ],
-  en: [
-    'Crunchy Kimpul chips from Bogor. Savory & addictive.',
-    'Crispy Mie Kremes from Bogor. Savory & crunchy.',
-  ],
-};
 
 export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolean }) {
   const { t, locale } = useLanguage();
   const branding = useLiveBranding();
   const products = useLiveProducts();
   const liveCategories = useLiveCategories();
-  const [descIndex, setDescIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setDescIndex(i => (i + 1) % 2);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, []);
 
   const quickLinks = [
     { href: '/', label: t.footer.links.home },
@@ -44,27 +23,14 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
     { href: '/panduan', label: t.footer.links.guide },
   ];
 
-  // Mirrors CategoriesSection: the admin's live category collection is the master
-  // data, with the 4 seeded categories only used as an emoji/name fallback and as
-  // a safety net for legacy category ids that never got a Firestore doc.
-  const emojiByName = Object.fromEntries(categoryData.map(c => [c.name.toLowerCase(), c.emoji]));
-  const liveIds = new Set(liveCategories.map(c => c.id));
-  const catNames = t.footer.categories;
-  const liveCards = liveCategories
+  // The admin's live category collection is the master data for what's shown here.
+  const categories = liveCategories
     .filter(c => products.some(p => p.category === c.id))
     .map(c => ({
-      emoji: c.emoji || emojiByName[c.name.toLowerCase()] || '🏷️',
-      label: catNames[c.id as keyof typeof catNames] ?? c.name,
+      emoji: c.emoji || '🏷️',
+      label: c.name,
       href: `/products?category=${c.id}`,
     }));
-  const legacyCards = categoryData
-    .filter(c => !liveIds.has(c.id) && products.some(p => p.category === c.id))
-    .map(c => ({
-      emoji: c.emoji,
-      label: catNames[c.id as keyof typeof catNames] ?? c.name,
-      href: `/products?category=${c.id}`,
-    }));
-  const categories = [...liveCards, ...legacyCards];
   return (
     <>
     <footer className={`relative bg-amber-800 overflow-hidden ${fullOnMobile ? 'block' : 'hidden md:block'}`}>
@@ -88,19 +54,10 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
                 <p className="font-display text-base font-bold gradient-text leading-none">Putra</p>
               </div>
             </div>
-            <div className="mb-5 max-w-xs h-12 relative overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={descIndex}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="text-amber-50/90 text-sm leading-relaxed absolute inset-0"
-                >
-                  {footerDescs[locale]?.[descIndex] ?? footerDescs.id[descIndex]}
-                </motion.p>
-              </AnimatePresence>
+            <div className="mb-5 max-w-xs">
+              <p className="text-amber-50/90 text-sm leading-relaxed">
+                {branding.tagline}
+              </p>
             </div>
             <div className="flex gap-3">
               <a
@@ -126,7 +83,7 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl bg-orange-500 flex items-center justify-center border border-orange-400 hover:bg-orange-400 transition-all"
-                aria-label="Shopee tehrisma.id"
+                aria-label={`Shopee ${branding.brandName}`}
               >
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 2C9.8 2 8 3.8 8 6H4.5C3.7 6 3 6.6 3 7.4L2 19.4C1.9 20.3 2.6 21 3.5 21H20.5C21.4 21 22.1 20.3 22 19.4L21 7.4C21 6.6 20.3 6 19.5 6H16C16 3.8 14.2 2 12 2ZM12 3.5C13.4 3.5 14.5 4.6 14.5 6H9.5C9.5 4.6 10.6 3.5 12 3.5Z" fill="#EE4D2D"/>
@@ -218,7 +175,7 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
                   rel="noopener noreferrer"
                   className="text-amber-50/90 hover:text-white text-sm transition-colors"
                 >
-                  0812-1213-2014
+                  {formatWhatsappDisplay(branding.whatsappNumber)}
                 </a>
               </li>
               <li className="flex items-center gap-2.5">

@@ -40,7 +40,7 @@ export default function AkunPage() {
 
   if (authLoading || !account) {
     return (
-      <main className="min-h-screen flex items-center justify-center" style={{ background: '#FFFBF5' }}>
+      <main className="min-h-screen flex items-center justify-center" style={{ background: '#FFFFFF' }}>
         <p className="text-amber-700/60 text-sm">Memuat...</p>
       </main>
     );
@@ -91,7 +91,7 @@ export default function AkunPage() {
     : null;
 
   return (
-    <main className="min-h-screen" style={{ background: '#FFFBF5' }}>
+    <main className="min-h-screen" style={{ background: '#FFFFFF' }}>
       <Navbar />
       <div className="max-w-md mx-auto px-4 pt-28 sm:pt-32 pb-40 md:pb-20">
         <h1 className="font-display text-3xl font-bold mb-1">

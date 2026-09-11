@@ -81,14 +81,14 @@ export default function PanduanPage() {
   ] as const;
 
   return (
-    <div className="min-h-screen" style={{ background: '#FFFBF5' }}>
+    <div className="min-h-screen" style={{ background: '#FFFFFF' }}>
       <Navbar />
       <Cart />
 
       {/* Hero */}
       <section className="relative pt-28 pb-10 px-4 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{
-          background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(251,191,36,0.13) 0%, transparent 60%), #FFFBF5',
+          background: 'radial-gradient(ellipse 70% 60% at 60% 40%, rgba(251,191,36,0.13) 0%, transparent 60%), #FFFFFF',
         }} />
         <div className="relative max-w-3xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -175,12 +175,12 @@ export default function PanduanPage() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-6 bg-gradient-to-br from-amber-700 to-orange-600 rounded-2xl p-6 text-center shadow-lg"
+                className="mt-6 bg-gradient-to-br from-amber-600 to-amber-500 rounded-2xl p-6 text-center shadow-lg"
               >
                 <p className="text-white font-display font-bold text-lg mb-1">
                   {locale === 'en' ? 'Ready to order?' : 'Siap memesan?'}
                 </p>
-                <p className="text-amber-200 text-sm mb-4">
+                <p className="text-white/80 text-sm mb-4">
                   {locale === 'en' ? 'Browse our products and add to cart now.' : 'Lihat produk kami dan mulai belanja sekarang.'}
                 </p>
                 <Link

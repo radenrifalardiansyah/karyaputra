@@ -98,8 +98,8 @@ export default function Navbar() {
           {/* Right side */}
           <div className="flex items-center gap-2">
 
-            {/* Language toggle */}
-            <div className="flex items-center h-9 rounded-full border border-amber-200 bg-white overflow-hidden shadow-sm">
+            {/* Language toggle — hidden for now, default locale is Indonesian */}
+            <div className="hidden items-center h-9 rounded-full border border-amber-200 bg-white overflow-hidden shadow-sm">
               {LOCALES.map(l => (
                 <button
                   key={l.code}

@@ -54,7 +54,7 @@ export const OPEN_HOURS = 'Setiap Hari, 08.00 – 21.00';
 
 export const DEVELOPER = {
   name: 'PT. Eleven Digital Indonesia',
-  url: 'https://eleven-digital.id',
+  url: 'https://elevendigital-id.vercel.app',
   supportedBy: 'PT. RMedia Production',
 };
 

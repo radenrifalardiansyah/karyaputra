@@ -7,7 +7,7 @@ export const translations = {
       cart: 'Keranjang', kontak: 'Kontak', guide: 'Panduan', credit: 'Credit', all: 'Semua', account: 'Akun',
     },
     hero: {
-      brand: (brand: string, city: string) => `${brand} · ${city}`,
+      brand: (brand: string, city: string) => city ? `${brand} · ${city}` : brand,
       orderNow: 'Pesan Sekarang', seeAll: 'Lihat Semua Produk',
       reviewsLabel: 'penilaian', soldSuffix: 'terjual',
       priceFrom: 'Harga mulai',
@@ -169,7 +169,7 @@ export const translations = {
       cart: 'Cart', kontak: 'Contact', guide: 'Guide', credit: 'Credit', all: 'More', account: 'Account',
     },
     hero: {
-      brand: (brand: string, city: string) => `${brand} · ${city}`,
+      brand: (brand: string, city: string) => city ? `${brand} · ${city}` : brand,
       orderNow: 'Order Now', seeAll: 'See All Products',
       reviewsLabel: 'reviews', soldSuffix: 'sold',
       priceFrom: 'Price from',

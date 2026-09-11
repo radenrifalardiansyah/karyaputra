@@ -18,43 +18,51 @@ interface SettingsDoc {
   logo?: string;
 }
 
-function instagramHandleFromUrl(url: string, fallback: string): string {
+function instagramHandleFromUrl(url: string): string {
   const m = url.match(/instagram\.com\/([^/?]+)/i);
-  return m?.[1] || fallback;
+  return m?.[1] || '';
 }
 
 // Branding is admin-editable via Settings > Info Toko / Kontak & Sosial Media / Tampilan
 // & Tema (Postgres `settings` table, sama seperti payment-info — lihat api/payment-info/
 // route.ts). Cache 1 jam, tag 'branding'; admin memicu revalidateStorefront('branding')
 // lewat POST /api/revalidate setiap kali Settings disimpan (lihat cemilantehrisma-admin's
-// api/settings/route.ts). Fail-open ke default statis kalau Postgres error/kosong — brand
-// harus tetap tampil walau database lagi bermasalah (lihat insiden RESOURCE_EXHAUSTED, yang
-// waktu itu soal Firestore — kini terlepas dari kuota harian itu sama sekali).
+// api/settings/route.ts).
+//
+// Identity/contact fields (nama, tagline, alamat, WA, IG, Shopee, Maps, jam buka) come
+// *only* from what the admin has actually saved — an unset field renders empty rather
+// than silently falling back to the old placeholder business data baked into
+// defaultLiveBranding(), which would otherwise look real to customers (e.g. routing
+// orders to a WhatsApp number the store never configured). Only the visual theme
+// colors and the logo image keep a hardcoded fallback, since a blank color/logo would
+// break rendering rather than just being wrong contact info.
 export const getCachedBranding = unstable_cache(
   async (): Promise<LiveBranding> => {
     const fallback = defaultLiveBranding();
     try {
       const s = (await getSettings()) as SettingsDoc;
-      const whatsappNumber = s.whatsapp || fallback.whatsappNumber;
-      const instagramUrl = s.instagramUrl || fallback.instagramUrl;
+      const whatsappNumber = s.whatsapp || '';
+      const instagramUrl = s.instagramUrl || '';
       return {
-        brandName: s.storeName || fallback.brandName,
-        legalName: s.legalName || fallback.legalName,
-        tagline: s.storeTagline || fallback.tagline,
+        brandName: s.storeName || '',
+        legalName: s.legalName || '',
+        tagline: s.storeTagline || '',
         whatsappNumber,
-        whatsappUrl: `https://wa.me/${whatsappNumber}`,
-        address: s.address || fallback.address,
-        city: s.city || fallback.city,
-        openHours: s.openHours || fallback.openHours,
+        whatsappUrl: whatsappNumber ? `https://wa.me/${whatsappNumber}` : '',
+        address: s.address || '',
+        city: s.city || '',
+        openHours: s.openHours || '',
         instagramUrl,
-        instagramHandle: instagramHandleFromUrl(instagramUrl, fallback.instagramHandle),
-        shopeeUrl: s.shopeeUrl || fallback.shopeeUrl,
-        mapsUrl: s.mapsUrl || fallback.mapsUrl,
+        instagramHandle: instagramHandleFromUrl(instagramUrl),
+        shopeeUrl: s.shopeeUrl || '',
+        mapsUrl: s.mapsUrl || '',
         themeColor: s.storefrontThemeColor || fallback.themeColor,
         themeBackgroundColor: s.storefrontThemeBackgroundColor || fallback.themeBackgroundColor,
         logo: s.logo || fallback.logo,
       };
     } catch (err) {
+      // Genuine infra failure (Postgres unreachable), not "admin left it blank" — fail
+      // open to the static placeholder here so the storefront doesn't go fully blank.
       console.error('[getCachedBranding]', err);
       return fallback;
     }

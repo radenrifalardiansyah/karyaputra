@@ -55,43 +55,51 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
                 {brandRest && <p className="font-display text-xl font-bold gradient-text leading-none">{brandRest}</p>}
               </div>
             </div>
-            <div className="mb-5 max-w-xs">
-              <p className="text-amber-50/90 text-sm leading-relaxed">
-                {branding.tagline}
-              </p>
-            </div>
+            {branding.tagline && (
+              <div className="mb-5 max-w-xs">
+                <p className="text-amber-50/90 text-sm leading-relaxed">
+                  {branding.tagline}
+                </p>
+              </div>
+            )}
             <div className="flex gap-3">
-              <a
-                href={branding.whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-green-500 flex items-center justify-center text-white border border-green-400 hover:bg-green-400 transition-all"
-                aria-label="WhatsApp"
-              >
-                <MessageCircle size={16} />
-              </a>
-              <a
-                href={branding.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl flex items-center justify-center text-white border border-pink-400 hover:opacity-90 transition-all" style={{ background: 'linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)' }}
-                aria-label={`Instagram @${branding.instagramHandle}`}
-              >
-                <Instagram size={16} />
-              </a>
-              <a
-                href={branding.shopeeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-orange-500 flex items-center justify-center border border-orange-400 hover:bg-orange-400 transition-all"
-                aria-label={`Shopee ${branding.brandName}`}
-              >
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C9.8 2 8 3.8 8 6H4.5C3.7 6 3 6.6 3 7.4L2 19.4C1.9 20.3 2.6 21 3.5 21H20.5C21.4 21 22.1 20.3 22 19.4L21 7.4C21 6.6 20.3 6 19.5 6H16C16 3.8 14.2 2 12 2ZM12 3.5C13.4 3.5 14.5 4.6 14.5 6H9.5C9.5 4.6 10.6 3.5 12 3.5Z" fill="#EE4D2D"/>
-                  <circle cx="8.5" cy="12" r="1.5" fill="#EE4D2D"/>
-                  <circle cx="15.5" cy="12" r="1.5" fill="#EE4D2D"/>
-                </svg>
-              </a>
+              {branding.whatsappUrl && (
+                <a
+                  href={branding.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-xl bg-green-500 flex items-center justify-center text-white border border-green-400 hover:bg-green-400 transition-all"
+                  aria-label="WhatsApp"
+                >
+                  <MessageCircle size={16} />
+                </a>
+              )}
+              {branding.instagramUrl && (
+                <a
+                  href={branding.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center text-white border border-pink-400 hover:opacity-90 transition-all" style={{ background: 'linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)' }}
+                  aria-label={`Instagram @${branding.instagramHandle}`}
+                >
+                  <Instagram size={16} />
+                </a>
+              )}
+              {branding.shopeeUrl && (
+                <a
+                  href={branding.shopeeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-xl bg-orange-500 flex items-center justify-center border border-orange-400 hover:bg-orange-400 transition-all"
+                  aria-label={`Shopee ${branding.brandName}`}
+                >
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C9.8 2 8 3.8 8 6H4.5C3.7 6 3 6.6 3 7.4L2 19.4C1.9 20.3 2.6 21 3.5 21H20.5C21.4 21 22.1 20.3 22 19.4L21 7.4C21 6.6 20.3 6 19.5 6H16C16 3.8 14.2 2 12 2ZM12 3.5C13.4 3.5 14.5 4.6 14.5 6H9.5C9.5 4.6 10.6 3.5 12 3.5Z" fill="#EE4D2D"/>
+                    <circle cx="8.5" cy="12" r="1.5" fill="#EE4D2D"/>
+                    <circle cx="15.5" cy="12" r="1.5" fill="#EE4D2D"/>
+                  </svg>
+                </a>
+              )}
             </div>
           </motion.div>
 
@@ -150,50 +158,60 @@ export default function Footer({ fullOnMobile = false }: { fullOnMobile?: boolea
           >
             <h4 className="font-display font-bold text-amber-100 mb-4 text-sm">{t.footer.contact}</h4>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2.5">
-                <MapPin size={14} className="text-amber-100 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-amber-50/90 text-sm leading-snug">
-                    {branding.address}<br />
-                    {branding.city}
-                  </p>
+              {(branding.address || branding.city) && (
+                <li className="flex items-start gap-2.5">
+                  <MapPin size={14} className="text-amber-100 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-amber-50/90 text-sm leading-snug">
+                      {branding.address}<br />
+                      {branding.city}
+                    </p>
+                    {branding.mapsUrl && (
+                      <a
+                        href={branding.mapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 mt-1.5 text-xs font-semibold text-amber-300 hover:text-white transition-colors"
+                      >
+                        <MapPin size={10} />
+                        {t.footer.mapsLink}
+                      </a>
+                    )}
+                  </div>
+                </li>
+              )}
+              {branding.whatsappUrl && (
+                <li className="flex items-center gap-2.5">
+                  <Phone size={14} className="text-amber-100 flex-shrink-0" />
                   <a
-                    href={branding.mapsUrl}
+                    href={branding.whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 mt-1.5 text-xs font-semibold text-amber-300 hover:text-white transition-colors"
+                    className="text-amber-50/90 hover:text-white text-sm transition-colors"
                   >
-                    <MapPin size={10} />
-                    {t.footer.mapsLink}
+                    {formatWhatsappDisplay(branding.whatsappNumber)}
                   </a>
-                </div>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Phone size={14} className="text-amber-100 flex-shrink-0" />
-                <a
-                  href={branding.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-amber-50/90 hover:text-white text-sm transition-colors"
-                >
-                  {formatWhatsappDisplay(branding.whatsappNumber)}
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Instagram size={14} className="text-amber-100 flex-shrink-0" />
-                <a
-                  href={branding.instagramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-amber-50/90 hover:text-white text-sm transition-colors"
-                >
-                  @{branding.instagramHandle}
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Clock size={14} className="text-amber-100 flex-shrink-0" />
-                <span className="text-amber-50/90 text-sm">{branding.openHours}</span>
-              </li>
+                </li>
+              )}
+              {branding.instagramUrl && (
+                <li className="flex items-center gap-2.5">
+                  <Instagram size={14} className="text-amber-100 flex-shrink-0" />
+                  <a
+                    href={branding.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-50/90 hover:text-white text-sm transition-colors"
+                  >
+                    @{branding.instagramHandle}
+                  </a>
+                </li>
+              )}
+              {branding.openHours && (
+                <li className="flex items-center gap-2.5">
+                  <Clock size={14} className="text-amber-100 flex-shrink-0" />
+                  <span className="text-amber-50/90 text-sm">{branding.openHours}</span>
+                </li>
+              )}
             </ul>
           </motion.div>
         </div>

@@ -14,8 +14,10 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import logo from '@/assets/images/logo-karyaputra.jpeg';
 import { LiveBranding, formatWhatsappDisplay } from '@/lib/branding';
 
+// Only lists a contact channel when the admin has actually configured it — an unset
+// WA/IG/Shopee no longer falls back to placeholder data, so it just doesn't appear.
 const getContacts = (branding: LiveBranding) => [
-  {
+  branding.whatsappNumber && {
     icon: Phone,
     label: 'WhatsApp',
     value: formatWhatsappDisplay(branding.whatsappNumber),
@@ -24,7 +26,7 @@ const getContacts = (branding: LiveBranding) => [
     bg: 'rgba(22,163,74,0.08)',
     border: 'rgba(22,163,74,0.2)',
   },
-  {
+  branding.instagramUrl && {
     icon: Instagram,
     label: 'Instagram',
     value: `@${branding.instagramHandle}`,
@@ -33,7 +35,7 @@ const getContacts = (branding: LiveBranding) => [
     bg: 'rgba(225,48,108,0.08)',
     border: 'rgba(225,48,108,0.2)',
   },
-  {
+  branding.shopeeUrl && {
     icon: ShoppingBag,
     label: 'Shopee',
     value: branding.shopeeUrl.split('/').filter(Boolean).pop() ?? 'Shopee',
@@ -42,7 +44,7 @@ const getContacts = (branding: LiveBranding) => [
     bg: 'rgba(238,77,45,0.08)',
     border: 'rgba(238,77,45,0.2)',
   },
-];
+].filter((c): c is Exclude<typeof c, false | ''> => Boolean(c));
 
 export default function KontakPage() {
   const { t } = useLanguage();
@@ -69,67 +71,75 @@ export default function KontakPage() {
         </motion.div>
 
         {/* Maps embed */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.08 }}
-          className="rounded-2xl overflow-hidden border border-amber-100 shadow-sm mb-4"
-        >
-          <iframe
-            src={`https://maps.google.com/maps?q=${encodeURIComponent(`${branding.address} ${branding.city}`)}&output=embed&z=16`}
-            width="100%"
-            height="220"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title={`Lokasi ${branding.legalName}`}
-          />
-        </motion.div>
+        {(branding.address || branding.city) && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 }}
+            className="rounded-2xl overflow-hidden border border-amber-100 shadow-sm mb-4"
+          >
+            <iframe
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(`${branding.address} ${branding.city}`)}&output=embed&z=16`}
+              width="100%"
+              height="220"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title={`Lokasi ${branding.legalName}`}
+            />
+          </motion.div>
+        )}
 
         {/* Address card */}
-        <motion.a
-          href={branding.mapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.12 }}
-          whileTap={{ scale: 0.98 }}
-          className="flex items-start gap-3 p-4 rounded-2xl border mb-4 w-full text-left"
-          style={{ background: 'rgba(22, 163, 74,0.07)', border: '1.5px solid rgba(22, 163, 74,0.2)' }}
-        >
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(22, 163, 74,0.15)' }}>
-            <MapPin size={18} className="text-amber-600" />
-          </div>
-          <div className="flex-1">
-            <p className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-0.5">{t.kontak.addressLabel}</p>
-            <p className="text-amber-950 text-sm font-medium leading-snug">
-              {branding.address}<br />
-              {branding.city}
-            </p>
-            <span className="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-amber-600">
-              {t.kontak.openMaps} <ExternalLink size={11} />
-            </span>
-          </div>
-        </motion.a>
+        {(branding.address || branding.city) && (
+          <motion.a
+            href={branding.mapsUrl || undefined}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-start gap-3 p-4 rounded-2xl border mb-4 w-full text-left"
+            style={{ background: 'rgba(22, 163, 74,0.07)', border: '1.5px solid rgba(22, 163, 74,0.2)' }}
+          >
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(22, 163, 74,0.15)' }}>
+              <MapPin size={18} className="text-amber-600" />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-0.5">{t.kontak.addressLabel}</p>
+              <p className="text-amber-950 text-sm font-medium leading-snug">
+                {branding.address}<br />
+                {branding.city}
+              </p>
+              {branding.mapsUrl && (
+                <span className="inline-flex items-center gap-1 mt-2 text-xs font-semibold text-amber-600">
+                  {t.kontak.openMaps} <ExternalLink size={11} />
+                </span>
+              )}
+            </div>
+          </motion.a>
+        )}
 
         {/* Jam buka */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.16 }}
-          className="flex items-center gap-3 p-4 rounded-2xl border mb-6"
-          style={{ background: 'rgba(22, 163, 74,0.05)', border: '1.5px solid rgba(22, 163, 74,0.15)' }}
-        >
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(22, 163, 74,0.12)' }}>
-            <Clock size={18} className="text-amber-600" />
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-0.5">{t.kontak.hoursLabel}</p>
-            <p className="text-amber-950 text-sm font-medium">{branding.openHours}</p>
-          </div>
-        </motion.div>
+        {branding.openHours && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.16 }}
+            className="flex items-center gap-3 p-4 rounded-2xl border mb-6"
+            style={{ background: 'rgba(22, 163, 74,0.05)', border: '1.5px solid rgba(22, 163, 74,0.15)' }}
+          >
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(22, 163, 74,0.12)' }}>
+              <Clock size={18} className="text-amber-600" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-0.5">{t.kontak.hoursLabel}</p>
+              <p className="text-amber-950 text-sm font-medium">{branding.openHours}</p>
+            </div>
+          </motion.div>
+        )}
 
         {/* Contact buttons */}
         <p className="text-xs font-semibold text-amber-700/50 uppercase tracking-widest mb-3">{t.kontak.contactUs}</p>
@@ -166,20 +176,22 @@ export default function KontakPage() {
         </div>
 
         {/* WA order shortcut */}
-        <motion.a
-          href={`https://wa.me/${branding.whatsappNumber}?text=${encodeURIComponent('Halo Karya Putra, saya mau pesan cemilan')}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.38 }}
-          whileTap={{ scale: 0.97 }}
-          className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-bold text-white text-sm shadow-lg"
-          style={{ background: 'linear-gradient(135deg, #16A34A, #15803D)', boxShadow: '0 6px 24px rgba(22,163,74,0.3)' }}
-        >
-          <MessageCircle size={18} />
-          {t.kontak.orderWA}
-        </motion.a>
+        {branding.whatsappNumber && (
+          <motion.a
+            href={`https://wa.me/${branding.whatsappNumber}?text=${encodeURIComponent(`Halo ${branding.brandName}, saya mau pesan`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.38 }}
+            whileTap={{ scale: 0.97 }}
+            className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-bold text-white text-sm shadow-lg"
+            style={{ background: 'linear-gradient(135deg, #16A34A, #15803D)', boxShadow: '0 6px 24px rgba(22,163,74,0.3)' }}
+          >
+            <MessageCircle size={18} />
+            {t.kontak.orderWA}
+          </motion.a>
+        )}
       </div>
 
       <BottomNav />

@@ -85,7 +85,7 @@ export default function Hero() {
     { value: `${soldCount}`, label: t.hero.stats.sold, icon: '📦' },
     ...(reviewCount > 0 ? [{ value: `${rating?.toFixed(1)}★`, label: t.hero.stats.rating, icon: '⭐' }] : []),
     { value: `${liveProducts.length}`, label: t.hero.stats.variants, icon: '🛒' },
-    { value: cityShort, label: t.hero.stats.location, icon: '📍' },
+    ...(cityShort ? [{ value: cityShort, label: t.hero.stats.location, icon: '📍' }] : []),
   ];
 
   const next = useCallback(() => {

@@ -16,6 +16,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useLiveProducts } from '@/lib/useLiveProducts';
 import { useLiveCategories } from '@/lib/useLiveCategories';
 import { trackClick } from '@/lib/trackClick';
+import { isVideoUrl } from '@/lib/media';
 
 function ProductsPage() {
   const searchParams = useSearchParams();
@@ -152,12 +153,23 @@ function ProductsPage() {
                 className="relative w-full overflow-hidden rounded-2xl shadow-md mb-8"
                 style={{ aspectRatio: '2 / 1' }}
               >
-                {/* Remote banner from the admin dashboard — plain img avoids next/image remote-domain config */}
-                <img
-                  src={activeBannerUrl}
-                  alt={activeCategoryMeta?.name ?? ''}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                {/* Remote banner from the admin dashboard — plain img/video avoids next/image remote-domain config */}
+                {isVideoUrl(activeBannerUrl) ? (
+                  <video
+                    src={activeBannerUrl}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  />
+                ) : (
+                  <img
+                    src={activeBannerUrl}
+                    alt={activeCategoryMeta?.name ?? ''}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
               </div>
             ) : (
               <ProductBanner />

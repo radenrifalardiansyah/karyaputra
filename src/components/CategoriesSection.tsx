@@ -6,6 +6,8 @@ import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLiveProducts } from '@/lib/useLiveProducts';
 import { useLiveCategories } from '@/lib/useLiveCategories';
+import { useLiveBranding } from '@/lib/useLiveBranding';
+import { splitBrandName } from '@/lib/branding';
 import { trackClick } from '@/lib/trackClick';
 
 // A small rotating gradient palette for category cards — categories themselves
@@ -30,6 +32,8 @@ export default function CategoriesSection() {
   const { t } = useLanguage();
   const products = useLiveProducts();
   const liveCategories = useLiveCategories();
+  const branding = useLiveBranding();
+  const [title1, title2] = splitBrandName(branding.categoriesTitle);
 
   // The admin's live category collection is the master data — it decides which
   // categories exist, and (via the admin form) their name/icon/description.
@@ -53,14 +57,14 @@ export default function CategoriesSection() {
         className="text-center mb-10 sm:mb-14"
       >
         <p className="text-amber-600/70 text-sm font-semibold tracking-widest uppercase mb-3">
-          {t.categories.badge}
+          {branding.categoriesBadge}
         </p>
         <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold">
-          <span className="text-amber-950">{t.categories.title1} </span>
-          <span className="gradient-text">{t.categories.title2}</span>
+          <span className="text-amber-950">{title1} </span>
+          <span className="gradient-text">{title2}</span>
         </h2>
         <p className="text-amber-800/55 text-sm sm:text-base mt-3 max-w-md mx-auto">
-          {t.categories.subtitle}
+          {branding.categoriesSubtitle}
         </p>
       </motion.div>
 

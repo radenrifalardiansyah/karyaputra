@@ -16,6 +16,14 @@ interface SettingsDoc {
   storefrontThemeColor?: string;
   storefrontThemeBackgroundColor?: string;
   logo?: string;
+  heroHeadline?: string;
+  heroDesc?: string;
+  featuredBadge?: string;
+  featuredTitle?: string;
+  featuredSubtitle?: string;
+  categoriesBadge?: string;
+  categoriesTitle?: string;
+  categoriesSubtitle?: string;
 }
 
 function instagramHandleFromUrl(url: string): string {
@@ -59,6 +67,18 @@ export const getCachedBranding = unstable_cache(
         themeColor: s.storefrontThemeColor || fallback.themeColor,
         themeBackgroundColor: s.storefrontThemeBackgroundColor || fallback.themeBackgroundColor,
         logo: s.logo || fallback.logo,
+        // Section copy (Hero/Produk Terlaris/Kategori): unlike identity/contact fields
+        // above, a blank value here would just look like broken layout, not wrong
+        // business info — so these keep the same fallback-to-default pattern as
+        // theme colors and logo.
+        heroHeadline: s.heroHeadline || fallback.heroHeadline,
+        heroDesc: s.heroDesc || fallback.heroDesc,
+        featuredBadge: s.featuredBadge || fallback.featuredBadge,
+        featuredTitle: s.featuredTitle || fallback.featuredTitle,
+        featuredSubtitle: s.featuredSubtitle || fallback.featuredSubtitle,
+        categoriesBadge: s.categoriesBadge || fallback.categoriesBadge,
+        categoriesTitle: s.categoriesTitle || fallback.categoriesTitle,
+        categoriesSubtitle: s.categoriesSubtitle || fallback.categoriesSubtitle,
       };
     } catch (err) {
       // Genuine infra failure (Postgres unreachable), not "admin left it blank" — fail

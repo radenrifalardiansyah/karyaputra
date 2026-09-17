@@ -5,12 +5,16 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Flame } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLiveProducts } from '@/lib/useLiveProducts';
+import { useLiveBranding } from '@/lib/useLiveBranding';
+import { splitBrandName } from '@/lib/branding';
 import ProductCard from './ProductCard';
 
 export default function FeaturedSection() {
   const products = useLiveProducts();
   const featured = products.filter(p => p.badge === 'Best Seller' || p.badge === 'Popular').slice(0, 6);
   const { t } = useLanguage();
+  const branding = useLiveBranding();
+  const [title1, title2] = splitBrandName(branding.featuredTitle);
 
   return (
     <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -25,15 +29,15 @@ export default function FeaturedSection() {
           <div className="flex items-center gap-2 mb-2">
             <Flame size={16} className="text-amber-500" />
             <p className="text-amber-600/70 text-sm font-semibold tracking-widest uppercase">
-              {t.featured.badge}
+              {branding.featuredBadge}
             </p>
           </div>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold">
-            <span className="text-amber-950">{t.featured.title1} </span>
-            <span className="gradient-text">{t.featured.title2}</span>
+            <span className="text-amber-950">{title1} </span>
+            <span className="gradient-text">{title2}</span>
           </h2>
           <p className="text-amber-800/55 text-sm sm:text-base mt-1.5 max-w-md">
-            {t.featured.subtitle}
+            {branding.featuredSubtitle}
           </p>
         </div>
 

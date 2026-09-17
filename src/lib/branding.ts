@@ -1,6 +1,6 @@
 export const BRAND_NAME = 'Karya Putra';
 export const LEGAL_NAME = 'Karya Putra';
-export const TAGLINE = 'Tepung Aci berkualitas khas Bogor. Bahan pilihan, harga bersahabat.';
+export const TAGLINE = 'Produk berkualitas khas Bogor. Bahan pilihan, harga bersahabat.';
 
 export const SITE_URL = 'https://karyaputra.vercel.app';
 
@@ -76,6 +76,16 @@ export interface LiveBranding {
   // Logo Toko dari admin (Cloudinary URL). null = admin belum upload logo custom —
   // komponen pakai gambar statis @/assets/images/logo-karyaputra.jpeg sebagai fallback.
   logo: string | null;
+  // Teks section Beranda (Hero, Produk Terlaris, Kategori) — admin-editable via
+  // Settings > Konten Beranda. Kosong dari admin = pakai default di bawah ini.
+  heroHeadline: string;
+  heroDesc: string;
+  featuredBadge: string;
+  featuredTitle: string;
+  featuredSubtitle: string;
+  categoriesBadge: string;
+  categoriesTitle: string;
+  categoriesSubtitle: string;
 }
 
 // Static fallback used when the admin hasn't set a field yet (or Postgres is
@@ -97,5 +107,13 @@ export function defaultLiveBranding(): LiveBranding {
     themeColor: THEME_COLOR,
     themeBackgroundColor: THEME_BACKGROUND_COLOR,
     logo: null,
+    heroHeadline: 'Belanja di',
+    heroDesc: 'Produk berkualitas dengan harga bersahabat, mulai',
+    featuredBadge: 'Terlaris',
+    featuredTitle: 'Menu Populer',
+    featuredSubtitle: 'Pilihan terbaik yang paling sering dipesan pelanggan kami',
+    categoriesBadge: 'Kategori Menu',
+    categoriesTitle: 'Pilih Menu Favoritmu',
+    categoriesSubtitle: 'Semua kategori produk kami tersedia di satu tempat',
   };
 }

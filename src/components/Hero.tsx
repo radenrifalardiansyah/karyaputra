@@ -168,7 +168,7 @@ export default function Hero() {
               transition={{ duration: 0.4 }}
               className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-3"
             >
-              <span className="text-amber-950">{t.hero.headline} </span>
+              <span className="text-amber-950">{branding.heroHeadline} </span>
               <span className="gradient-text">{branding.brandName}</span>
             </motion.h1>
 
@@ -211,7 +211,7 @@ export default function Hero() {
               transition={{ duration: 0.35 }}
               className="text-amber-800/65 text-base sm:text-lg leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0"
             >
-              {t.hero.genericDesc} <strong className="text-amber-700">{cheapestPriceOverall()}</strong>.
+              {branding.heroDesc} <strong className="text-amber-700">{cheapestPriceOverall()}</strong>.
             </motion.p>
 
             {/* CTA */}

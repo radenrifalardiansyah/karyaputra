@@ -1,20 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { defaultLiveBranding, LiveBranding } from './branding';
+import { LiveBranding } from './branding';
+import { useBranding } from '@/contexts/BrandingContext';
 
 // Branding managed from the admin dashboard (Settings > Info Toko / Kontak & Sosial
-// Media / Tampilan & Tema). Seeded with the static defaults so components never need
-// a loading/null branch, then updated once /api/branding resolves.
+// Media / Tampilan & Tema). Resolved server-side once in RootLayout (getCachedBranding())
+// and handed down via BrandingProvider — so this just reads the already-correct value
+// instead of fetching /api/branding client-side, which used to render the hardcoded
+// fallback text first and flash to the real value a moment later.
 export function useLiveBranding(): LiveBranding {
-  const [branding, setBranding] = useState<LiveBranding>(defaultLiveBranding);
-
-  useEffect(() => {
-    fetch('/api/branding')
-      .then(r => r.ok ? r.json() : null)
-      .then((d: LiveBranding | null) => { if (d) setBranding(d); })
-      .catch(() => {});
-  }, []);
-
-  return branding;
+  return useBranding();
 }

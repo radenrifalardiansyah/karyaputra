@@ -8,6 +8,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import { Analytics } from '@vercel/analytics/next';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { BrandingProvider } from '@/contexts/BrandingContext';
 import VisitorTracker from '@/components/VisitorTracker';
 import { SITE_URL } from '@/lib/branding';
 import { getCachedBranding } from '@/lib/server/branding';
@@ -105,6 +106,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       </head>
       <body className="antialiased">
+        <BrandingProvider branding={branding}>
         <LanguageProvider>
         <AuthProvider>
         <SplashScreen />
@@ -136,6 +138,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
         </AuthProvider>
         </LanguageProvider>
+        </BrandingProvider>
         <Analytics />
       </body>
     </html>
